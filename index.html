@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="assets/css/css/terminal.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/css/flex.css">
+        </script>
+    </head>
 <body>
-    <div class=frame>
-        <div class="file-listing">
-            <iframe src="/files.html"></iframe>
+<div class="container">
+        <div class="col">
+            <iframe id="file-explorer" src="/files.html"></iframe>
         </div>
-        <div class="tabs"></div>
-        <div class="editor"></div>
-        <div class="console"></div>
-        <div class="preview"><iframe></iframe></div>
-    </div>
+        <div class="col">
+            <div class="row" id="tabs">
+                <div class='col'>TTT</div>
+                <div class='col'>TTT2</div>
+            </div>
+            <div><iframe id="editor" src="/terminal.html"></iframe></div>
+        </div>
+        <div class="col">
+            <div class="row" id="simualted-browser">HERE WILL GO A SIMULATED ADDRESS BAR</div>
+            <meta http-equiv="Content-Security-Policy"
+             content="default-src *; style-src 
+             'self' 'unsafe-inline'; script-src 'self'
+              'unsafe-inline' 'unsafe-eval' http://www.google.com">
+            <iframe class="row" style="height:45vh;width:20vw" src="http://www.google.com"></iframe>
+            <div class=" console col" style="border-style: dashed;height:48vh;width: 20vw;"
+            >
+                CONSOLE
+            </div>
+</div>
+</div>
 </body>
 
 </html>
