@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html style="margin: 0">
+<head>
+<title>SKF editor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/css/css/codemirror.css">
+<script src="assets/js/codemirror-compressed.js"></script>
+<script src="assets/js/mode.js"></script>
+</head>
+<body>
+	<script>
+	function startCodeMirror(){
+		var cMOptions = {
+		mode: "application/x-httpd-php",
+		lineNumbers: true,
+		gutters: ["CodeMirror-foldgutter", "CodeMirror-lint-markers", "CodeMirror-linenumbers"],
+		foldGutter: {gutter: "CodeMirror-foldgutter"},
+		foldOptions: {minFoldSize: 1},
+		lineWrapping: true,
+		indentWithTabs: true,
+		indentUnit: 4,
+		tabSize: 4,
+		matchBrackets: true,
+		electricChars: false,
+		autoCloseTags: true,
+		autoCloseBrackets: true,
+		highlightSelectionMatches: true,
+		showTrailingSpace: true,
+		lint: false
+	};
+	var myCodeMirror = CodeMirror(document.body, cMOptions);
+	}
+	
+	startCodeMirror();
+	</script>
+
+</body>
+
+</html>
