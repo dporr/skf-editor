@@ -1,7 +1,11 @@
 <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="assets/css/css/file-types.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/css/files.css">
+    </head>
     <body>
         <div id="file-manager" class="file-manager">
-            <ul id="files" class="files">
+            <ul id="files" class="file-manager">
             </ul>
         </div>
         <script>
@@ -15,12 +19,14 @@
                 data.files.forEach(item => {
                     let il = document.createElement('li');
                     let text = document.createTextNode(item.name);
-                    il.setAttribute("class", item.type);
-                    il.setAttribute("id", item.type);
+                    il.setAttribute("class", `pft-directory dirOpen ${item.type} ${parent.id}`);
+                    il.setAttribute("id", item.name);
+                    il.setAttribute("style", "position: relative; left:-22px")
                     il.appendChild(text)
                     parent.appendChild(il)
                     if(item.type == "folder"){
                         nested = document.createElement('ul')
+                        nested.setAttribute("class", "file-manager");
                         parent.appendChild(nested)
                         render(item, nested);
                     } 
