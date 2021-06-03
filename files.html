@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <div id="file-manager" class="file-manager">
+            <ul id="files" class="files">
+            </ul>
+        </div>
+        <script>
+            var files = document.getElementById('files');
+            fetch('./mock_files.json')
+            .then(response => response.json())
+            .then(data => render(data, files))
+            .catch(err => console.error(err));
+
+            function render(data,parent){
+                data.files.forEach(item => {
+                    let il = document.createElement('li');
+                    let text = document.createTextNode(item.name);
+                    il.setAttribute("class", item.type);
+                    il.setAttribute("id", item.type);
+                    il.appendChild(text)
+                    parent.appendChild(il)
+                    if(item.type == "folder"){
+                        nested = document.createElement('ul')
+                        parent.appendChild(nested)
+                        render(item, nested);
+                    } 
+                });
+            }
+        </script>
+    </body>
+</html>
