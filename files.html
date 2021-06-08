@@ -1,37 +1,64 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="assets/css/css/file-types.css">
-        <link rel="stylesheet" type="text/css" href="assets/css/css/files.css">
-    </head>
-    <body>
-        <div id="file-manager" class="file-manager">
-            <ul id="files" class="file-manager">
-            </ul>
-        </div>
-        <script>
-            var files = document.getElementById('files');
-            fetch('./mock_files.json')
-            .then(response => response.json())
-            .then(data => render(data, files))
-            .catch(err => console.error(err));
+<!DOCTYPE html>
+<html onmousedown="parent.ICEcoder.mouseDown = true;  parent.ICEcoder.boxSelect(event, 'down')"
+ onmouseup="parent.ICEcoder.mouseDown = false;  parent.ICEcoder.mouseDownInCM = false; parent.ICEcoder.boxSelect(event, 'up');
+ if (!parent.ICEcoder.overCloseLink) {parent.ICEcoder.tabDragEnd()}" onmousemove="if (parent.ICEcoder) 
+ {parent.ICEcoder.getMouseXY(event, 'files');  parent.ICEcoder.canResizeFilesW(); parent.ICEcoder.boxSelect(event, 'drag')}" 
+ ondrop="if (parent.ICEcoder) {parent.ICEcoder.getMouseXY(event, 'files')}" oncontextmenu="parent.ICEcoder.selectFileFolder(event); 
+ return parent.ICEcoder.showMenu(event)" onclick="if (!parent.ICEcoder.fmDraggedBox) {parent.ICEcoder.selectFileFolder(event)}
+  else {parent.ICEcoder.fmDraggedBox = false}" ondragstart="parent.ICEcoder.selectFileFolder(event);" ondragover="event.preventDefault(); 
+  event.stopPropagation()"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>ICEcoder v8.0 file manager</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" type="text/css" href="files_data/resets.css">
+    <link rel="stylesheet" type="text/css" href="files_data/files.css">
+    <link rel="stylesheet" type="text/css" href="files_data/file-types.css">
+    <link rel="stylesheet" type="text/css" href="files_data/file-type-icons.css">
+    <!--Updated via settings so must remain 5th stylesheet//-->
+    <style>
+        ul.fileManager li a span { font-size:  13px; }
+    </style>
 
-            function render(data,parent){
-                data.files.forEach(item => {
-                    let il = document.createElement('li');
-                    let text = document.createTextNode(item.name);
-                    il.setAttribute("class", `pft-directory dirOpen ${item.type} ${parent.id}`);
-                    il.setAttribute("id", item.name);
-                    il.setAttribute("style", "position: relative; left:-22px")
-                    il.appendChild(text)
-                    parent.appendChild(il)
-                    if(item.type == "folder"){
-                        nested = document.createElement('ul')
-                        nested.setAttribute("class", "file-manager");
-                        parent.appendChild(nested)
-                        render(item, nested);
-                    } 
-                });
-            }
-        </script>
-    </body>
-</html>
+</head>
+<body onfocus="parent.ICEcoder.files.style.background = '#444'" onblur="parent.ICEcoder.files.style.background = '#383838'" ondblclick="if ('file' === parent.ICEcoder.thisFileFolderType) {parent.ICEcoder.openFile()}" onkeydown="return parent.ICEcoder.interceptKeys('files', event);" onkeyup="parent.ICEcoder.resetKeys(event);" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="" style="cursor: auto;">
+
+<div title="Lock" onclick="parent.ICEcoder.lockUnlockNav()" class="lock"><div id="fmLockClosed" style="display: inline-block"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z"></path>
+    <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+    <circle cx="12" cy="16" r="1"></circle>
+    <path d="M8 11v-4a4 4 0 0 1 8 0v4"></path>
+</svg>
+</div><div id="fmLockOpen" style="display: none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock-open" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z"></path>
+    <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+    <circle cx="12" cy="16" r="1"></circle>
+    <path d="M8 11v-5a4 4 0 0 1 8 0"></path>
+</svg>
+</div></div>
+<div title="Refresh" onclick="parent.ICEcoder.refreshFileManager()" class="refresh"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z"></path>
+    <path d="M4.05 11a8 8 0 1 1 .5 4m-.5 5v-5h5"></path>
+</svg>
+</div>
+<!-- <div title="Plugins" onclick="parent.ICEcoder.showHidePlugins('55px' !== parent.document.getElementById('plugins').style.width  ? 'show' : 'hide')" class="plugins"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plug" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z"></path>
+    <path d="M7 7h10v6a3 3 0 0 1 -3 3h-4a3 3 0 0 1 -3 -3v-6"></path>
+    <line x1="9" y1="3" x2="9" y2="7"></line>
+    <line x1="15" y1="3" x2="15" y2="7"></line>
+    <path d="M12 16v2a2 2 0 0 0 2 2h3"></path>
+</svg>
+</div> -->
+
+<ul class="fileManager">
+    <li class="pft-directory dirOpen"><a nohref="" title="/" ondragover="parent.ICEcoder.overFileFolder('folder', '|'); parent.ICEcoder.highlightFileFolder('|', true);" ondragleave="parent.ICEcoder.overFileFolder('folder', ''); parent.ICEcoder.highlightFileFolder('|', false);" onmouseover="parent.ICEcoder.overFileFolder('folder', '|')" onmouseout="parent.ICEcoder.overFileFolder('folder', '')" onclick="parent.ICEcoder.openCloseDir(this)" style="position: relative; left:-22px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="|" style="background-color: rgb(68, 153, 221); color: rgb(255, 255, 255);">/ [ROOT]</span> <span style="color: #888; font-size: 8px" id="|_perms">755</span></a></li><ul style="display: block;"><li class="pft-file ext-php" draggable="false" ondragstart="parent.ICEcoder.addDefaultDragData(this,event)" ondrag="parent.ICEcoder.draggingWithKeyTest(event); if (parent.ICEcoder.getcMInstance()) {parent.ICEcoder.editorFocusInstance.indexOf('diff') == -1 ? parent.ICEcoder.getcMInstance().focus() : parent.ICEcoder.getcMdiffInstance().focus()}" ondragover="parent.ICEcoder.setDragCursor(event,'file')" ondragend="parent.ICEcoder.dropFile(this)"><a nohref="" title="/index.php" onmouseover="parentNode.draggable=true;parent.ICEcoder.overFileFolder('file',this.childNodes[1].id)" onmouseout="parentNode.draggable=false;parent.ICEcoder.overFileFolder('file','')" ondragover="parent.ICEcoder.overFileFolder('file', this.childNodes[1].id); parent.ICEcoder.highlightFileFolder(this.parentNode.parentNode.previousSibling.childNodes[0].childNodes[1].id, true);" ondragleave="parent.ICEcoder.highlightFileFolder(this.parentNode.parentNode.previousSibling.childNodes[0].childNodes[1].id, false); " onclick="if(!event.ctrlKey &amp;&amp; !parent.ICEcoder.cmdKey) { if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {parent.ICEcoder.openFile()}}" style="position: relative; left:-22px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="|index.php">index.php</span> <span style="color: #888; font-size: 8px" id="|index.php_perms">644</span></a></li></ul></ul>
+
+<iframe name="fileControl" src="files_data/get-branch.html" style="display: none"></iframe>
+
+<iframe name="pingActive" style="display: none"></iframe>
+
+<div class="fmDragBox" id="fmDragBox" style="width: 0px; height: 0px;"></div>
+
+
+
+
+</body></html>

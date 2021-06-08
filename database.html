@@ -1,89 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<title>ICEcoder v8.0 Terminal</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="robots" content="noindex, nofollow">
-<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
-<link rel="stylesheet" type="text/css" href="terminal_data/terminal.css">
-<script type="text/javascript" language="JavaScript">
-commandHistory = [];
-currentLine = 0;
-
-// Handle command history as user cycles with up/down arrow keys or types other keys
-key = function(e) {
-	if (!e) {
-		var e = window.event;
-	}
-
-	// Up
-	if (38 === e.keyCode) {
-		// If blank, set a blank line as current
-		if ("" == document.getElementById('command').value) {
-			currentCommand = "";
-		}
-		// If we have history and the last command in history isn't this one
-		if (commandHistory[commandHistory.length - 1] && commandHistory[commandHistory.length - 1].replace("[[ICEcoder]]:", "") !== currentCommand) {
-			// Push or append as last item in array with string to indicate temp nature
-			if (0 !== commandHistory[commandHistory.length - 1].indexOf("[[ICEcoder]]:")) {
-				commandHistory.push("[[ICEcoder]]:" + currentCommand);
-			} else {
-				commandHistory[commandHistory.length - 1] = "[[ICEcoder]]:" + currentCommand;
-			}
-		}
-		// If we have at least some items in history, step back a level and display the previous command
-		if (0 < currentLine) {
-			currentLine--;
-			document.getElementById('command').value = commandHistory[currentLine].replace("[[ICEcoder]]:", "");
-		}
-	// Down
-	// If the current line isn't the last in the array, take a step forward and display the command
-	} else if(40 === e.keyCode && currentLine < commandHistory.length - 1) {
-		currentLine++;
-		document.getElementById('command').value = commandHistory[currentLine].replace("[[ICEcoder]]:", "");
-	// Set the current command value to that of the user input
-	} else {
-		currentCommand = document.getElementById('command').value;
-	}
-}
-
-sendCmd = function(command) {
-	// Send command over XHR for response and display
-	xhr = parent.ICEcoder.xhrObj();
-	xhr.onreadystatechange = function() {
-		if (4 === xhr.readyState) {
-			// OK reponse?
-			if (200 === xhr.status) {
-				// Set the output to also include our response and scroll down to bottom
-				var newOutput = document.createElement("DIV");
-				responseText = xhr.responseText;
-				responseJSON = JSON.parse(responseText);
-				newOutput.innerHTML = responseJSON.output;
-				document.getElementById("user").innerHTML = "&nbsp;&nbsp" + responseJSON.user + "&nbsp;";
-				document.getElementById("cwd").innerHTML = "&nbsp;" + responseJSON.cwd + "&nbsp;";
-				var cmdElem = document.getElementById("commandLine");
-				cmdElem.parentNode.insertBefore(newOutput, cmdElem);
-				parent.document.getElementById("terminal").contentWindow.document.documentElement.scrollTop = document.getElementById('output').scrollHeight;
-
-				// Add command onto end of history array or set as last item in array
-				if (0 === currentLine || 0 !== commandHistory[commandHistory.length - 1].indexOf("[[ICEcoder]]:")) {
-					commandHistory.push(document.getElementById('command').value);
-				} else {
-					commandHistory[commandHistory.length - 1] = document.getElementById('command').value;
-				}
-
-				// Set the current line to be the length of the array and clear the command
-				currentLine = commandHistory.length;
-				document.getElementById('command').value = "";
-			}
-		}
-	};
-
-	// Send the XHR request
-	xhr.open("POST", parent.ICEcoder.iceLoc + "/lib/terminal-xhr.php?csrf=" + parent.ICEcoder.csrf, true);
-	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xhr.send('command=' + encodeURIComponent(command));
-}
-</script><script>/*
+<html dir="ltr" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex">
+<title>Login - Adminer</title>
+<link rel="stylesheet" type="text/css" href="database_data/database_002.css">
+<script src="database_data/database.php" nonce=""></script><script>/*
  * This entire block is wrapped in an IIFE to prevent polluting the scope of the web page with
  * functions created by this extension.
  */
@@ -1425,18 +1345,48 @@ class CardNumber extends RelevantInput {
     window.fetch
 );
 </script>
-</head>
+<link rel="shortcut icon" type="image/x-icon" href="http://localhost:8080/icecoder/lib/database.php?file=favicon.ico&amp;version=4.7.3">
+<link rel="apple-touch-icon" href="http://localhost:8080/icecoder/lib/database.php?file=favicon.ico&amp;version=4.7.3">
+<link rel="stylesheet" type="text/css" href="database_data/database.css">
 
-<body onclick="document.getElementById('command').focus()" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="">
+</head><body class="ltr js" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="">
+<script nonce="">
+mixin(document.body, {onkeydown: bodyKeydown, onclick: bodyClick, onload: partial(verifyVersion, '4.7.3', 'database.php?', '696695:776743')});
+document.body.className = document.body.className.replace(/ nojs/, ' js');
+var offlineMessage = 'You are offline.';
+var thousandsSeparator = ',';
+</script>
 
-<form name="shell" onsubmit="sendCmd(document.getElementById('command').value); return false" method="POST">
-	<pre class="output" id="output"><span style="color: #0a0">ICEcoder v8.0 terminal</span>
-This is a full powered terminal, but will have the permissions of the 'www-data' user.
-The more access rights you give that user, the more this terminal has.
+<div id="help" class="jush-sql jsonly hidden"></div>
+<script nonce="">mixin(qs('#help'), {onmouseover: function () { helpOpen = 1; }, onmouseout: helpMouseout});</script>
 
-<div class="commandLine" id="commandLine"><div class="user" id="user">&nbsp;&nbsp;www-data&nbsp;</div><div class="cwd" id="cwd">&nbsp;/var/www/html&nbsp;</div> : 20:06:12<br><div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div> <input type="text" class="command" id="command" onkeyup="key(event)" tabindex="1" autocomplete="off"></div></pre>
+<div id="content">
+<h2>Login</h2>
+<div id="ajaxstatus" class="jsonly hidden hidden"></div>
+<form action="" method="post">
+<div></div>
+<table class="layout" cellspacing="0">
+<tbody><tr><th>System</th><td><select name="auth[driver]"><option value="server" selected="selected">MySQL</option><option value="sqlite">SQLite 3</option><option value="sqlite2">SQLite 2</option><option value="pgsql">PostgreSQL</option><option value="oracle">Oracle (beta)</option><option value="mssql">MS SQL (beta)</option><option value="firebird">Firebird (alpha)</option><option value="simpledb">SimpleDB</option><option value="mongo">MongoDB</option><option value="elastic">Elasticsearch (beta)</option><option value="clickhouse">ClickHouse (alpha)</option></select><script nonce="">qsl('select').onchange = function () { loginDriver(this); };</script>
+</td></tr><tr class=""><th>Server</th><td><input name="auth[server]" title="hostname[:port]" placeholder="localhost" autocapitalize="none">
+</td></tr><tr><th>Username</th><td><input name="auth[username]" id="username" autocomplete="username" autocapitalize="none"><script nonce="">focus(qs('#username')); qs('#username').form['auth[driver]'].onchange();</script>
+</td></tr><tr><th>Password</th><td><input type="password" name="auth[password]" autocomplete="current-password" class="">
+</td></tr><tr><th>Database</th><td><input name="auth[db]" autocapitalize="none">
+</td></tr></tbody></table>
+<p><input type="submit" value="Login" class="">
+<label><input type="checkbox" name="auth[permanent]" value="1">Permanent login</label>
+</p></form>
+</div>
+
+<form action="" method="post">
+<div id="lang">Language: <select name="lang"><option value="en" selected="selected">English</option><option value="ar">العربية</option><option value="bg">Български</option><option value="bn">বাংলা</option><option value="bs">Bosanski</option><option value="ca">Català</option><option value="cs">Čeština</option><option value="da">Dansk</option><option value="de">Deutsch</option><option value="el">Ελληνικά</option><option value="es">Español</option><option value="et">Eesti</option><option value="fa">فارسی</option><option value="fi">Suomi</option><option value="fr">Français</option><option value="gl">Galego</option><option value="he">עברית</option><option value="hu">Magyar</option><option value="id">Bahasa Indonesia</option><option value="it">Italiano</option><option value="ja">日本語</option><option value="ka">ქართული</option><option value="ko">한국어</option><option value="lt">Lietuvių</option><option value="ms">Bahasa Melayu</option><option value="nl">Nederlands</option><option value="no">Norsk</option><option value="pl">Polski</option><option value="pt">Português</option><option value="pt-br">Português (Brazil)</option><option value="ro">Limba Română</option><option value="ru">Русский</option><option value="sk">Slovenčina</option><option value="sl">Slovenski</option><option value="sr">Српски</option><option value="ta">த‌மிழ்</option><option value="th">ภาษาไทย</option><option value="tr">Türkçe</option><option value="uk">Українська</option><option value="vi">Tiếng Việt</option><option value="zh">简体中文</option><option value="zh-tw">繁體中文</option></select><script nonce="">qsl('select').onchange = function () { this.form.submit(); };</script> <input type="submit" value="Use" class="hidden">
+<input type="hidden" name="token" value="1045568:954128">
+</div>
 </form>
-
-
-
+<div id="menu">
+<h1>
+<a href="https://www.adminer.org/" target="_blank" rel="noreferrer noopener" id="h1">Adminer</a> <span class="version">4.7.3</span>
+<a href="https://www.adminer.org/#download" target="_blank" rel="noreferrer noopener" id="version"><iframe src="database_data/a.html" marginheight="0" scrolling="no" style="width: 7ex; height: 1.25em; display: none;" frameborder="0"></iframe></a>
+</h1>
+</div>
+<script nonce="">setupSubmitHighlight(document);</script>
 </body></html>

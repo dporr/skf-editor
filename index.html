@@ -1,35 +1,353 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="assets/css/css/terminal.css">
-        <link rel="stylesheet" type="text/css" href="assets/css/css/flex.css">
-        </script>
-    </head>
-<body>
-<div class="container">
-        <div class="col">
-            <iframe id="file-explorer" src="/files.html"></iframe>
-        </div>
-        <div class="col">
-            <div class="row" id="tabs">
-                <div class='col'>TTT</div>
-                <div class='col'>TTT2</div>
-            </div>
-            <div><iframe id="editor" src="/terminal.html"></iframe></div>
-        </div>
-        <div class="col">
-            <div class="row" id="simualted-browser">HERE WILL GO A SIMULATED ADDRESS BAR</div>
-            <meta http-equiv="Content-Security-Policy"
-             content="default-src *; style-src 
-             'self' 'unsafe-inline'; script-src 'self'
-              'unsafe-inline' 'unsafe-eval' http://www.google.com">
-            <iframe class="row" style="height:45vh;width:20vw" src="http://www.google.com"></iframe>
-            <div class=" console col" style="border-style: dashed;height:48vh;width: 20vw;"
-            >
-                CONSOLE
-            </div>
-</div>
-</div>
-</body>
+<html onmousewheel=" if (ICEcoder.getcMInstance() &amp;&amp; !ICEcoder.getcMInstance().hasFocus() &amp;&amp; !ICEcoder.getcMdiffInstance().hasFocus()) {event.wheelDelta &gt; 0 ? ICEcoder.nextTab() : ICEcoder.previousTab();}" onmousemove="if ('undefined' !== typeof ICEcoder) {ICEcoder.getMouseXY(event, 'top');  ICEcoder.canResizeFilesW()}" onmouseup="ICEcoder.mouseDown = false;  ICEcoder.mouseDownInCM = false; if (!ICEcoder.overCloseLink) {ICEcoder.tabDragEnd()}" onmousedown="ICEcoder.mouseDown = true; "><head><script>docRoot = '/var/www/html'; iceRoot=''</script>
 
-</html>
+
+<title>ICEcoder v8.0</title>
+<!--Updated via settings so must remain 1st stylesheet//-->
+<style>
+	#tabsBar.tabsBar .tab { font-size: 13px; }
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="resets.css">
+<link rel="stylesheet" type="text/css" href="icecoder.css">
+<link rel="stylesheet" type="text/css" href="file-type-icons.css">
+<link rel="stylesheet" href="icecoder_002.css">
+<link rel="icon" type="image/png" href="http://localhost:8080/icecoder/assets/images/favicon.png">
+<script>
+iceRoot = "";
+
+window.onbeforeunload = function() {
+	if (ICEcoder.autoLogoutTimer < ICEcoder.autoLogoutMins * 60) {
+		for (var i = 1; i <= ICEcoder.savedPoints.length; i++) {
+			if (ICEcoder.savedPoints[i - 1] != ICEcoder.getcMInstance(i).changeGeneration()) {
+				return "You have some unsaved changes.";
+			}
+		}
+		return "Are you sure you want to close?";
+	}
+}
+
+t = {
+"results" : "results",
+"No text selected..." : "No text selected to search on",
+"all files" : "all files",
+"all filenames" : "all filenames",
+"selected files" : "selected files",
+"selected filenames" : "selected filenames",
+"Creating Folder" : "Creating Folder",
+"Sorry you can..." : "Sorry, you can only have 100 files open at a time!",
+"Opening File" : "Opening File",
+"Enter relative file..." : "Enter relative file path (prefixed with /) or remote URL\nYou can enter \n'/path/file:123' or \n'/path/file(123)' or \n'/path/file.ext line 123' \nto go directly to particular line",
+"Getting" : "Getting",
+"Saving" : "Saving:",
+"Please enter the..." : "Please enter the new name for",
+"Renaming to" : "Renaming to",
+"Moving to" : "Moving to",
+"Deleting File" : "Deleting File",
+"Pasting File" : "Pasting File",
+"Sorry cannot paste..." : "Sorry, cannot paste a whole root",
+"Nothing to paste..." : "Nothing to paste, copy a file/folder first!",
+"and" : "and",
+"this document" : "this document",
+"replace" : "replace",
+"replace all" : "replace all",
+"file" : "file",
+"Replacing text in" : "Replacing text in",
+"Sorry there was..." : "Sorry, there was an error with your request.\n\nPlease check your dev tools console for more info.",
+"Cancelled tasks" : "Cancelled tasks",
+"Please note for..." : "Please note: for updating to work properly, you need to have write access on all ICEcoder dirs & files. It will first check if this is the case and list any unwriteable (and therefore unmoveable) files.\n\nIf you need to recover this version of ICEcoder for any reason, you'll find it in the /tmp dir.\n\nClick OK to proceed with the check and auto-update, or cancel to visit the ICEcoder site so you can grab the zip and update manually.",
+"You can start..." : "You can start bug reporting in Help > Settings",
+"Error cannot find..." : "Error: cannot find/access the error file paths",
+"No new errors..." : "No new errors found",
+"You have made..." : "You have made changes. Are you sure you want to close without saving?",
+"Close all tabs" : "Close all tabs?"
+}
+</script>
+<script language="JavaScript" src="icecoder.js"></script>
+<script src="mmd.js"></script>
+<script src="farbtastic.js"></script>
+<script src="difflib.js"></script>
+<link rel="stylesheet" href="farbtastic.css" type="text/css">
+</head>
+
+<body onload="ICEcoder.versionNo = '8.0';ICEcoder.previousFiles = [];ICEcoder.theme = 'icecoder';ICEcoder.autoLogoutMins = 0;ICEcoder.fontSize = '13px';ICEcoder.openLastFiles = true;ICEcoder.updateDiffOnSave = true;ICEcoder.languageUser = 'english.php';ICEcoder.codeAssist = true;ICEcoder.lockedNav = true;ICEcoder.lineWrapping = false;ICEcoder.lineNumbers = true;ICEcoder.showTrailingSpace = true;ICEcoder.matchBrackets = true;ICEcoder.autoCloseTags = true;ICEcoder.autoCloseBrackets = true;ICEcoder.indentType = 'spaces';ICEcoder.indentAuto = true;ICEcoder.indentSize = 4;ICEcoder.scrollbarStyle = 'overlay';ICEcoder.demoMode = false;ICEcoder.tagWrapperCommand = 'ctrl+alt';ICEcoder.autoComplete = 'keypress';ICEcoder.bugFilePaths = [''];ICEcoder.bugFileCheckTimer = 0;ICEcoder.bugFileMaxLines = 0;ICEcoder.fileDirResOutput = 'none';ICEcoder.newDirPerms = 755;ICEcoder.newFilePerms = 644;ICEcoder.csrf = '21b42b714addaee46457886b1bfdddfe';ICEcoder.init();ICEcoder.content.style.visibility = 'visible';" onresize="ICEcoder.setLayout()" onkeydown="return ICEcoder.interceptKeys('coder', event);" onkeyup="if ('visible' === get('blackMask').style.visibility) {ICEcoder.handleModalKeyUp(event, 'modalGeneralCatch')}; ICEcoder.resetKeys(event);" onblur="ICEcoder.resetKeys(event);" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="8.876.0" style="cursor: auto;">
+
+<div id="loadingMask" class="blackMask" style="visibility: hidden;" oncontextmenu="return false">
+	<div class="popupVCenter">
+		<div class="popup">
+			<div class="spinner"></div>
+			working...
+		</div>
+	</div>
+</div>
+
+<div id="infoBlackMask" class="infoBlackMask" oncontextmenu="return false"></div>
+<div id="infoMessageContainer" class="infoMessageContainer" oncontextmenu="return false">
+    <div id="infoMessage" class="infoMessage"></div>
+</div>
+
+<!-- <div id="plugins" class="plugins" style="left: 0"
+ onmouseover="ICEcoder.showHidePlugins('show')"
+  onmouseout="ICEcoder.showHidePlugins('hide')"
+   onclick="ICEcoder.showHidePlugins('hide')">
+	<div style="padding: 15px">
+		<a nohref="" onclick="ICEcoder.showColorPicker(document.getElementById('color') ? document.getElementById('color').value : '#123456')" title="Farbtastic
+Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Picker"></a><br><br>
+		<div id="pluginsOptional"></div>
+		<a nohref="" onclick="ICEcoder.pluginsManager()" title="Plugins Manager" style="color: #ddd; margin-left: 2px; cursor: pointer"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z"></path>
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+</svg>
+</a>
+	</div>
+</div> -->
+<div id="wrapper" style="display: grid; grid-template-columns: 20% 40% 40%;">
+	<div id="fileMenu" class="fileMenu" onmouseover="ICEcoder.changeFilesW('expand')" 
+	onmouseout="ICEcoder.changeFilesW('contract');
+	 ICEcoder.hideFileMenu()" style="opacity: 0; display: none;"
+	  oncontextmenu="return false">
+		<span id="folderMenuItems">
+			<a href="javascript:ICEcoder.newFile()" onmouseover="ICEcoder.showFileMenu()">New File</a>
+			<a href="javascript:ICEcoder.newFolder()" onmouseover="ICEcoder.showFileMenu()">New Folder</a>
+			<div onmouseover="ICEcoder.showFileMenu()" style="padding: 2px 0"><hr></div>
+			<a href="javascript:ICEcoder.uploadFilesSelect(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()">Upload File(s)</a>
+			<div style="display: none">
+				<form enctype="multipart/form-data" id="uploadFilesForm" action="/icecoder/lib/file-control.php?action=upload&amp;file=/uploaded" method="POST" target="fileControl">
+					<input type="hidden" name="folder" id="uploadDir" value="/">
+					<input type="file" name="filesInput[]" id="fileInput" 
+					onchange="ICEcoder.uploadFilesSubmit(this)" multiple="">
+					<input type="submit" value="Upload File">
+					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
+				</form>
+			</div>
+			<a href="javascript:ICEcoder.pasteFiles(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()" id="fmMenuPasteOption" style="display: none">Paste</a>
+			<div onmouseover="ICEcoder.showFileMenu()" style="padding: 2px 0"><hr></div>
+		</span>
+		<a href="javascript:ICEcoder.openFilesFromList(ICEcoder.selectedFiles)" onmouseover="ICEcoder.showFileMenu()">Open</a>
+		<a href="javascript:ICEcoder.copyFiles(ICEcoder.selectedFiles)" onmouseover="ICEcoder.showFileMenu()">Copy</a>
+		<a href="javascript:ICEcoder.duplicateFiles(ICEcoder.selectedFiles)" onmouseover="ICEcoder.showFileMenu()">Duplicate</a>
+		<a href="javascript:ICEcoder.deleteFiles(ICEcoder.selectedFiles)" onmouseover="ICEcoder.showFileMenu()">Delete</a>
+		<span id="singleFileMenuItems">
+			<a href="javascript:ICEcoder.renameFile(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()">Rename</a>
+			<div onmouseover="ICEcoder.showFileMenu()" style="padding: 2px 0"><hr></div>
+			<a nohref="" onclick="window.open('//localhost:8080' + iceRoot + ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1].replace(/\|/g, '/'))" onmouseover="ICEcoder.showFileMenu()" style="cursor: pointer">View Webpage</a>
+		</span>
+		<div onmouseover="ICEcoder.showFileMenu()" style="padding: 2px 0"><hr></div>
+			<a href="javascript:ICEcoder.downloadFile(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()">Download</a>
+		<div onmouseover="ICEcoder.showFileMenu()" style="padding: 2px 0"><hr></div>
+		<a href="javascript:ICEcoder.propertiesScreen(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()">Properties</a>
+	</div>
+	
+	<div id="files" class="files" onmouseover="ICEcoder.changeFilesW('expand')" onmouseout="ICEcoder.changeFilesW('contract'); ICEcoder.hideFileMenu();" oncontextmenu="return false" style="width: 250px; background: rgb(56, 56, 56) none repeat scroll 0% 0%;">
+		<!-- <div id="fileNav" class="fileNav">
+			<ul>
+				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsFile')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsFile')}" id="optionsFileNav">File</a></li>
+				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsEdit')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsEdit')}" id="optionsEditNav">Edit</a></li>
+				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsSettings')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsSettings')}" id="optionsSettingsNav">Settings</a></li>
+				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsHelp')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsHelp')}" id="optionsHelpNav">Help</a></li>
+			</ul>
+		</div> -->
+		<div class="options" id="fileOptions">
+			<div id="optionsFile" class="optionsList" onmouseover="ICEcoder.showHideFileNav('show', this.id)" onmouseout="ICEcoder.showHideFileNav('hide', this.id); ICEcoder.canShowFMNav = false" style="width: 250px;">
+				<ul>
+					<li><a nohref="" onclick="ICEcoder.newFile()">New File...</a></li>
+					<li><a nohref="" onclick="ICEcoder.newFolder()">New Folder...</a></li>
+					<li><a nohref="" onclick="ICEcoder.openPrompt()">Open...</a></li>
+					<li><a nohref="" onclick="ICEcoder.saveFile(false, false)">Save</a></li>
+					<li><a nohref="" onclick="ICEcoder.saveFile(true, false)">Save As...</a></li>
+					<li><a nohref="" onclick="ICEcoder.openPreviewWindow()">Live Preview</a></li>
+					<!-- <li><a nohref="" onclick="ICEcoder.downloadFile(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Download</a></li>
+					<li><a nohref="" onclick="ICEcoder.copyFiles(ICEcoder.selectedFiles)">Copy</a></li>
+					<li><a nohref="" onclick="ICEcoder.pasteFiles(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Paste</a></li> -->
+					<li><a nohref="" onclick="ICEcoder.deleteFiles(ICEcoder.selectedFiles)">Delete</a></li>
+					<li><a nohref="" onclick="ICEcoder.duplicateFiles(ICEcoder.selectedFiles)">Duplicate</a></li>
+					<li><a nohref="" onclick="ICEcoder.renameFile(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Rename</a></li>
+					<li><a nohref="" onclick="ICEcoder.uploadFilesSelect(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Upload...</a></li>
+					<li><a nohref="" onclick="ICEcoder.zipIt(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Zip</a></li>
+					<li><a nohref="" onclick="ICEcoder.propertiesScreen(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])">Properties...</a></li>
+					<li><a nohref="" onclick="ICEcoder.printCode()">Print...</a></li>
+					<li><a nohref="" onclick="ICEcoder.fullScreenSwitcher()">Fullscreen toggle</a></li>
+					<li><a nohref="" onclick="ICEcoder.logout()">Logout</a></li>
+				</ul>
+			</div>
+			<div id="optionsEdit" class="optionsList" onmouseover="ICEcoder.showHideFileNav('show', this.id)" onmouseout="ICEcoder.showHideFileNav('hide', this.id); ICEcoder.canShowFMNav = false" style="width: 250px;">
+				<ul>
+					<li><a nohref="" onclick="ICEcoder.undo()">Undo</a></li>
+					<li><a nohref="" onclick="ICEcoder.redo()">Redo</a></li>
+					<li><a nohref="" onclick="ICEcoder.indent('more')">Indent more</a></li>
+					<li><a nohref="" onclick="ICEcoder.indent('less')">Indent less</a></li>
+					<li><a nohref="" onclick="ICEcoder.autocomplete()">Autocomplete</a></li>
+					<li><a nohref="" onclick="ICEcoder.lineCommentToggle()">Comment/Uncomment</a></li>
+					<li><a nohref="" onclick="ICEcoder.jumpToDefinition()">Jump to Definition</a></li>
+				</ul>
+			</div>
+			<div id="optionsSettings" class="optionsList" onmouseover="ICEcoder.showHideFileNav('show', this.id)" onmouseout="ICEcoder.showHideFileNav('hide', this.id);ICEcoder.canShowFMNav = false" style="width: 250px;">
+				<ul>
+					<li><a nohref="" onclick="ICEcoder.settingsScreen(false, 'general')">General</a></li>
+					<li><a nohref="" onclick="ICEcoder.settingsScreen(false, 'style')">Style</a></li>
+					<li><a nohref="" onclick="ICEcoder.settingsScreen(false, 'accounts')">Accounts</a></li>
+					<li><a nohref="" onclick="ICEcoder.settingsScreen(false, 'security')">Security</a></li>
+					<li><a nohref="" onclick="ICEcoder.pluginsManager()">Plugins</a></li>
+				</ul>
+			</div>
+			<div id="optionsHelp" class="optionsList" onmouseover="ICEcoder.showHideFileNav('show', this.id)" onmouseout="ICEcoder.showHideFileNav('hide', this.id);ICEcoder.canShowFMNav = false" style="width: 250px;">
+				<ul>
+					<li><a nohref="" onclick="ICEcoder.viewTutorial(false, 500)">Tutorial</a></li>
+					<li><a href="https://icecoder.net/usage" target="_blank">Usage</a></li>
+					<li><a href="https://icecoder.net/tips-tricks" target="_blank">Tips &amp; Tricks</a></li>
+					<li><a nohref="" onclick="ICEcoder.showManual('8.0')">Manual</a></li>
+					<li><a nohref="" onclick="ICEcoder.helpScreen()">Shortcuts</a></li>
+					<li><a nohref="" onclick="ICEcoder.searchForSelected()">Search for selected</a></li>
+					<li><a href="https://icecoder.net/" target="_blank">ICEcoder website</a></li>
+				</ul>
+			</div>
+		</div>
+		<iframe id="filesFrame" class="frame" name="ff" src="files.html" style="opacity: 1; height: 556px;" onload="this.style.opacity = '1'; this.contentWindow.onscroll = function(){ICEcoder.mouseDown = false; ICEcoder.mouseDownInCM = false}"></iframe>
+	
+		<div class="tools" id="tools">
+			<div onclick="ICEcoder.toolShowHideToggle('terminal')" id="toolLinkTerminal" title="Terminal"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-terminal-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<path d="M8 9l3 3l-3 3"></path>
+		<line x1="13" y1="15" x2="16" y2="15"></line>
+		<rect x="3" y="4" width="18" height="16" rx="2"></rect>
+	</svg>
+	</div>
+			<div onclick="ICEcoder.toolShowHideToggle('output'); this.className = ''" id="toolLinkOutput" title="Output"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-list" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<rect x="4" y="4" width="16" height="6" rx="2"></rect>
+		<rect x="4" y="14" width="16" height="6" rx="2"></rect>
+	</svg>
+	</div>
+			<!-- <div onclick="ICEcoder.toolShowHideToggle('database')" id="toolLinkDatabase"
+			 title="Database">
+			 <svg xmlns="http://www.w3.org/2000/svg" 
+			 class="icon icon-tabler icon-tabler-database" 
+			 width="44" height="44" viewBox="0 0 24 24"
+			  stroke-width="1.5" stroke="currentColor"
+			   fill="none" stroke-linecap="round"
+				stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<ellipse cx="12" cy="6" rx="8" ry="3"></ellipse>
+		<path d="M4 6v6a8 3 0 0 0 16 0v-6"></path>
+		<path d="M4 12v6a8 3 0 0 0 16 0v-6"></path>
+	</svg>
+	</div>
+			<div onclick="ICEcoder.toolShowHideToggle('git')" id="toolLinkGit" title="Git"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-git-compare" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<circle cx="6" cy="6" r="2"></circle>
+		<circle cx="18" cy="18" r="2"></circle>
+		<path d="M11 6h5a2 2 0 0 1 2 2v8"></path>
+		<polyline points="14 9 11 6 14 3"></polyline>
+		<path d="M13 18h-5a2 2 0 0 1 -2 -2v-8"></path>
+		<polyline points="10 15 13 18 10 21"></polyline>
+	</svg>
+	</div> -->
+		</div>
+	</div>
+	
+	<div id="center" class="wrapp" style="display:block; width: 50vw;">
+		<div id="header" class="header" oncontextmenu="return false"></div>
+		<div id="editor" class="editor">
+			
+			<div id="tabsBar" class="tabsBar" oncontextmenu="return false" >
+				<div id="tabsBarButtons" style="position: relative; padding-left: 47px;"><a nohref="" onclick="ICEcoder.closeAllTabs()"><img src="nav-close-all.gif" class="closeAllTabs" title="Close all tabs"></a>
+					<a nohref="" onclick="ICEcoder.alphaTabs()"><img src="nav-alpha.png" class="alphaTabs" title="Alphabetize tabs"></a></div>
+
+				<div id="tab1" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab2" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab3" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab4" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab5" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab6" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab7" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab8" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab9" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab10" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab11" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab12" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab13" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab14" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab15" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab16" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab17" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab18" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab19" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab20" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab21" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab22" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab23" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab24" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab25" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab26" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab27" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab28" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab29" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab30" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab31" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab32" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab33" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab34" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab35" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab36" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab37" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab38" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab39" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab40" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab41" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab42" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab43" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab44" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab45" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab46" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab47" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab48" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab49" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab50" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab51" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab52" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab53" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab54" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab55" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab56" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab57" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab58" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab59" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab60" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab61" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab62" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab63" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab64" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab65" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab66" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab67" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab68" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab69" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab70" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab71" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab72" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab73" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab74" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab75" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab76" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab77" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab78" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab79" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab80" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab81" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab82" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab83" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab84" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab85" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab86" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab87" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab88" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab89" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab90" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab91" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab92" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab93" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab94" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab95" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab96" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab97" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab98" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab99" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div id="tab100" class="tab" onmousedown="if (false === ICEcoder.overCloseLink) {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10)); return false}; thisColor = ICEcoder.colorSelectedText;" onmouseover="thisColor = this.style.color; this.style.color = ICEcoder.colorSelectedText" onmouseout="this.style.color = thisColor"></div><div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab" style="left: 53px;">+</div>
+			</div>
+			<div id="findBar" class="findBar" oncontextmenu="return false" style="width: 100%;">
+				<form name="findAndReplace" onsubmit="ICEcoder.findReplace(get('find').value, false, false, false); ICEcoder.getcMInstance().focus(); return false">
+					<div class="findReplace">
+						<div class="findText">Find</div>
+						<input type="text" name="find" id="find" class="textbox find" oninput="ICEcoder.findReplaceOnInput()">
+		
+						<div class="selectWrapper" style="width: 41px">
+							<select name="connector" onchange="ICEcoder.findReplaceOptions()" style="width: 40px; margin-top: 4px">
+								<option selected="selected">in</option>
+								<option>and</option>
+							</select>
+						</div>
+						<div class="replaceText" id="rText" style="display: none">
+							<div class="selectWrapper" style="width: 75px; overflow: visible">
+								<select name="replaceAction" style="width: 72px; margin-top: -2px">
+									<option selected="selected">replace</option>
+									<option>replace all</option>
+								</select>
+							</div>
+							 <div class="withText">with</div>
+						</div>
+						<input type="text" name="replace" id="replace" class="textbox replace" style="display: none">
+						<div class="targetText" id="rTarget" style="display: none">in</div>
+							<div class="selectWrapper" style="width: 104px">
+								<select name="target" onchange="ICEcoder.updateResultsDisplay('this document' === this.value ? 'show' : 'hide')" style="width: 101px; margin-top: 4px; margin-left: 2px">
+									<option selected="selected">this document</option>
+									<option>open documents</option>
+									<option>selected files</option>
+									<option>selected filenames</option>
+								</select>
+							</div>
+						<input type="button" name="prev" value="&lt;&lt;" class="button" onclick="ICEcoder.findReplace(get('find').value, true, true, true);">
+						<input type="button" name="next" value="&gt;&gt;" class="button" onclick="ICEcoder.findReplace(get('find').value, true, true, false);">
+						<input type="submit" name="sub" value="sub" style="display: none">
+						<div class="results" id="results"></div>
+					</div>
+					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
+				</form>
+				<form onsubmit="return ICEcoder.goToLine(get('goToLineNo').value, 0, false)">
+					<div class="goLine">Go to Line <input type="text" name="goToLine" maxlength="5" id="goToLineNo" onkeyup="ICEcoder.goToLine(this.value, 0, true)" class="textbox goToLine"></div>
+					<div class="view" title="View" onclick="ICEcoder.openPreviewWindow()" id="fMView"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<path stroke="none" d="M0 0h24v24H0z"></path>
+			<rect x="4" y="4" width="16" height="16" rx="1"></rect>
+			<line x1="4" y1="8" x2="20" y2="8"></line>
+			<line x1="8" y1="4" x2="8" y2="8"></line>
+		</svg>
+		</div>
+					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
+				</form>
+			</div>
+			<iframe name="terminalFrame" id="terminal" src="terminal.html" class="terminal" style="width: 1079px; top: 646px; height: 646px;"></iframe>
+			<pre id="output" class="output" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
+			<!-- <iframe name="databaseFrame" id="database" src="database.html" class="database" style="width: 1079px; top: 646px; height: 646px;"></iframe> -->
+			<!-- <div id="git" class="git" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;">To provide git diff data to ICEcoder, please run...<br><br>sudo nohup php server/run-tasks.php &gt; data/nohup.log 2&gt;&amp;1 &amp;<br><br>...to run as a background process</div> -->
+			<iframe name="contentFrame" id="content" src="editor.html" class="code" scrolling="no" style="width: 1079px; height: 546px; visibility: visible;">
+			</iframe>
+		</div>
+	</div>
+	
+	<div class="footer" id="footer" oncontextmenu="return false">
+		<div class="versionsDisplay" id="versionsDisplay" onclick="ICEcoder.versionsScreen(ICEcoder.openFiles[ICEcoder.selectedTab - 1].replace(/\//g, '|'))" style="left: 260px;"></div>
+		<div class="serverMessage" id="serverMessage" style="left: 260px;"></div>
+		<div class="splitPaneControls" id="splitPaneControls" style="left: 758px;"><div class="off" id="splitPaneControlsOff" title="Single pane" onclick="ICEcoder.setSplitPane('off')" style="opacity: 0.8"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<rect x="4" y="4" width="16" height="16" rx="2"></rect>
+	</svg>
+	</div><div class="on" id="splitPaneControlsOn" title="Diff pane also" onclick="ICEcoder.setSplitPane('on')" style="opacity: 0.2"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-columns" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<rect x="4" y="4" width="16" height="16" rx="2"></rect>
+		<line x1="12" y1="4" x2="12" y2="20"></line>
+	</svg>
+	</div></div>
+		<div class="splitPaneNames" id="splitPaneNamesMain" style="left: 469px;">Main Pane</div>
+		<div class="splitPaneNames" id="splitPaneNamesDiff" style="left: 1009px;">Diff Pane</div>
+		<div class="byteDisplay" id="byteDisplay" style="display: none" onclick="ICEcoder.showDisplay('char')"></div>
+		<div class="charDisplay" id="charDisplay" style="display: inline-block" onclick="ICEcoder.showDisplay('byte')"></div>
+	</div>
+	
+	<div id="tooltip" class="tooltip" style="display: none"></div>
+	
+	<div class="closeIcon" style="display: none" id="closeIcon"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path stroke="none" d="M0 0h24v24H0z"></path>
+		<line x1="18" y1="6" x2="6" y2="18"></line>
+		<line x1="6" y1="6" x2="18" y2="18"></line>
+	</svg>
+	</div>
+
+
+</div>
+<script>
+ICEcoder.initAliases();
+ICEcoder.setLayout(false);
+</script>
+</body></html>
