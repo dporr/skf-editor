@@ -310,13 +310,12 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
 				</form>
 			</div>
-			<iframe name="terminalFrame" id="terminal" src="terminal.html" class="terminal" style="width: 1079px; top: 646px; height: 646px;"></iframe>
-			<pre id="output" class="output" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
 			<!-- <iframe name="databaseFrame" id="database" src="database.html" class="database" style="width: 1079px; top: 646px; height: 646px;"></iframe> -->
 			<!-- <div id="git" class="git" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;">To provide git diff data to ICEcoder, please run...<br><br>sudo nohup php server/run-tasks.php &gt; data/nohup.log 2&gt;&amp;1 &amp;<br><br>...to run as a background process</div> -->
 			<iframe name="contentFrame" id="content" src="editor.html" class="code" scrolling="no" style="width: 1079px; height: 546px; visibility: visible;">
 			</iframe>
 		</div>
+
 
 	<div class="footer" id="footer" oncontextmenu="return false">
 		<div class="versionsDisplay" id="versionsDisplay" onclick="ICEcoder.versionsScreen(ICEcoder.openFiles[ICEcoder.selectedTab - 1].replace(/\//g, '|'))" style="left: 260px;"></div>
@@ -337,7 +336,12 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 		<div class="charDisplay" id="charDisplay" style="display: inline-block" onclick="ICEcoder.showDisplay('byte')"></div>
 	</div>
 	</div>
-	<div id="realtime-status" class="wrapp"> TEST</div>
+	<div id="realtime-status" class="wrapp"> 
+		<div>
+			<iframe name="terminalFrame" id="terminal" src="terminal.html" class="terminal" style="width: 1079px; top: 646px; height: 646px;"></iframe>
+			<pre id="output" class="output" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
+		</div>
+	</div>
 
 	
 	<div id="tooltip" class="tooltip" style="display: none"></div>
