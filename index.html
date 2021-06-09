@@ -337,10 +337,9 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 	</div>
 	</div>
 	<div id="realtime-status" class="wrapp"> 
-		<div>
-			<iframe name="terminalFrame" id="terminal" src="terminal.html" class="terminal" style="width: 1079px; top: 646px; height: 646px;"></iframe>
-			<pre id="output" class="output" style="font-family: monospace; width: 1048px; top: 646px; height: 646px;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
-		</div>
+			<!-- <iframe class="preview" id="browser" src="terminal2.html" style="display: block; width: 100%;"> -->
+			<iframe name="terminalFrame" id="terminal" src="terminal.html" class="terminal" style="width: 100%; max-height: 50vh; position: relative;"></iframe>
+			 <pre id="output" class="output" style="font-family: monospace; height: 0px; width: 100%;position: relative;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
 	</div>
 
 	
