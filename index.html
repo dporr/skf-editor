@@ -18,14 +18,12 @@
 iceRoot = "";
 
 window.onbeforeunload = function() {
-	if (ICEcoder.autoLogoutTimer < ICEcoder.autoLogoutMins * 60) {
 		for (var i = 1; i <= ICEcoder.savedPoints.length; i++) {
 			if (ICEcoder.savedPoints[i - 1] != ICEcoder.getcMInstance(i).changeGeneration()) {
 				return "You have some unsaved changes.";
 			}
 		}
 		return "Are you sure you want to close?";
-	}
 }
 
 t = {
