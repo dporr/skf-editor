@@ -328,19 +328,14 @@ var ICEcoder = {
 
     // Tool show/hide toggle
     toolShowHideToggle: function(tool) {
-        let winH;
-
-        winH = window.innerHeight;
-
         if (-1 < ["terminal", "output"].indexOf(tool)) {
+            //if(tool === this.showingTool){get(tool).style.top = 0; break }
             // Set out of view as a start point
-            get('terminal').style.top = winH + "px";
-            get('output').style.top = winH + "px";
-            // get('database').style.top = winH + "px";
-            // get('git').style.top = winH + "px";
+            get(tool).style.top = "50vh";
+            //get('output').style.top = "50vh";
 
             // Now set tool requested, out of view, or in view
-            get(tool).style.top = tool === this.showingTool ? winH + "px" : 0;
+            get(tool).style.top = tool === this.showingTool ? "100vh":"50vh";
 
             // Carry out any extras...
             if (tool === "terminal") {
