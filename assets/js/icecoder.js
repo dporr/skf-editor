@@ -336,7 +336,7 @@ var ICEcoder = {
             //if(tool === this.showingTool){get(tool).style.top = 0; break }
             // Set out of view as a start point
             //currentTool.style.top = "50vh";
-            toolsBar.style.top = 98 - 50 + "vh"
+            toolsBar.style.bottom = 98 - 50 + "vh"
             currentTool.style.height = "50vh";
             currentTool.style.width = "100%";
             currentTool.style.display = "block";
@@ -344,7 +344,7 @@ var ICEcoder = {
 
             // Now set tool requested, out of view, or in view
             if(tool === this.showingTool){
-                toolsBar.style.top =  "97vh";
+                toolsBar.style.bottom =  "0vh";
                 currentTool.style.height = currentTool.style.width = 0;
                 currentTool.style.display= "none";
                 get("output").style.display = "none";

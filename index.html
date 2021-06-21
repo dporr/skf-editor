@@ -304,7 +304,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 		<div class="preview" id="browser" style="display: block;">
 			<iframe src="editor.html" style="border:none;display:block;width: 100%; height: 100%;"></iframe>
 		</div>
-		<div id="tool-icons" style="position: absolute; height: 30px; top: 97vh; width: inherit;">
+		<div id="tool-icons" style="position: absolute; height: 30px; bottom: 0vh; width: inherit;">
 				<div onclick="ICEcoder.toolShowHideToggle('terminal')" id="toolLinkTerminal" title="Terminal" style="display: inline-block;">
 					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-terminal-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 				<path stroke="none" d="M0 0h24v24H0z"></path>
@@ -319,6 +319,13 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 			<rect x="4" y="14" width="16" height="6" rx="2"></rect>
 			</svg>
 			</div>
+
+			<div class="closeIcon" style="display: none" id="closeIcon"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+				<path stroke="none" d="M0 0h24v24H0z"></path>
+				<line x1="18" y1="6" x2="6" y2="18"></line>
+				<line x1="6" y1="6" x2="18" y2="18"></line>
+			</svg>
+			</div>
 		</div>	
 
 		<div name="terminalFrame" id="terminal" style="border:none;display:block;height: 0px; width: 0px; position:unset" >
@@ -331,13 +338,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 
 	
 	<div id="tooltip" class="tooltip" style="display: none"></div>
-	
-	<div class="closeIcon" style="display: none" id="closeIcon"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-		<path stroke="none" d="M0 0h24v24H0z"></path>
-		<line x1="18" y1="6" x2="6" y2="18"></line>
-		<line x1="6" y1="6" x2="18" y2="18"></line>
-	</svg>
-	</div>
+
 
 
 </div>
