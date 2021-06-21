@@ -225,7 +225,8 @@ var ICEcoder = {
         // this.splitPaneNamesMain.style.left = (parseInt((winW - this.filesW) * 0.25, 10) - 50 + this.filesW) + "px";
         // this.splitPaneNamesDiff.style.left = (parseInt((winW - this.filesW) * 0.75, 10) - 50 + this.filesW) + "px";
         this.setTabWidths(false);
-
+        //display the terminal
+        //this.toolShowHideToggle("terminal");
         // If we need to set the editor sizes
         if (false !== setEditor) {
             console.log("getting called")

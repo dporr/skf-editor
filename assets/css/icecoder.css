@@ -12,6 +12,12 @@ h2 {font-size: 18px; font-weight: normal; color: #fff}
 .wrapp {
     height: 100%;
 }
+div{
+    border: 1px solid red;
+}
+.realtime-status{
+    border: 1px solid greenyellow;
+}
 .icon-tabler {width: 24px; height: 24px; stroke-width: 1.25}
 .blackMask {position: fixed; display: table; width: 100%; height: 100%; top: 0; left: 0; visibility: hidden; background-color: rgba(0,0,0,0.8); text-align: center; z-index: 100}
 .blackMask .popupVCenter {#position: absolute; display: table-cell; #top: 50%; vertical-align: middle; text-align: center}
