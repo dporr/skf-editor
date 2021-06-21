@@ -304,8 +304,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 		<div class="preview" id="browser" style="display: block;">
 			<iframe src="editor.html" style="border:none;display:block;width: 100%; height: 100%;"></iframe>
 		</div>
-		<div id="tool-icons" style="position: absolute; bottom: 5px;">
-			<div class="tools" id="tools">
+		<div id="tool-icons" style="position: absolute; height: 30px; top: 97vh; width: inherit;">
 				<div onclick="ICEcoder.toolShowHideToggle('terminal')" id="toolLinkTerminal" title="Terminal" style="display: inline-block;">
 					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-terminal-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 				<path stroke="none" d="M0 0h24v24H0z"></path>
@@ -320,15 +319,14 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 			<rect x="4" y="14" width="16" height="6" rx="2"></rect>
 			</svg>
 			</div>
-		</div>
 		</div>	
 
-		<div name="terminalFrame" id="terminal" style="border:none;display:block;width: 100%; height: 100%; position:fixed" >
+		<div name="terminalFrame" id="terminal" style="border:none;display:block;height: 0px; width: 0px; position:unset" >
 			<iframe src="terminal.html" id='terminal' class="terminal" style="border:none;display:block;
 			width: 100%; height: 100%;"></iframe>
 		</div>
 			
-			 <pre id="output" class="output" style="font-family: monospace; height: 0px; width: 100%;position: relative;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
+			 <pre id="output" class="output" style="font-family: monospace; height: 0px; width: 0px;position: unset;"><b>Output</b><br>via ICEcoder.output(message);<br><br></pre>
 	</div>
 
 	

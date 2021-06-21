@@ -78,8 +78,8 @@ var ICEcoder = {
     initAliases: function() {
         const aliasArray = ["header", "files", "fileOptions", "optionsFile", "optionsEdit", "optionsSettings",
          "optionsHelp", "filesFrame", "editor", "tabsBar", "findBar", "terminal", "output", "database",
-          "git", "content", "tools", "footer", "versionsDisplay", "splitPaneControls", 
-          "splitPaneNamesMain", "splitPaneNamesDiff", "charDisplay", "byteDisplay","center"];
+          "git", "content", "tools", "footer", "versionsDisplay", "splitPaneControls",
+          "splitPaneNamesMain", "splitPaneNamesDiff", "charDisplay", "byteDisplay","center", "tool-icons"];
 
         // Create our ID aliases
         for (let i = 0; i < aliasArray.length; i++) {
@@ -330,10 +330,13 @@ var ICEcoder = {
     // Tool show/hide toggle
     toolShowHideToggle: function(tool) {
         if (-1 < ["terminal", "output"].indexOf(tool)) {
+            toolsBar = get("tool-icons");
             currentTool = get(tool);
+            toolsBar.appendChild(currentTool)
             //if(tool === this.showingTool){get(tool).style.top = 0; break }
             // Set out of view as a start point
-            currentTool.style.top = "50vh";
+            //currentTool.style.top = "50vh";
+            toolsBar.style.top = 98 - 50 + "vh"
             currentTool.style.height = "50vh";
             currentTool.style.width = "100%";
             currentTool.style.display = "block";
@@ -341,9 +344,10 @@ var ICEcoder = {
 
             // Now set tool requested, out of view, or in view
             if(tool === this.showingTool){
-                currentTool.style.top =  "100vh";
+                toolsBar.style.top =  "97vh";
                 currentTool.style.height = currentTool.style.width = 0;
                 currentTool.style.display= "none";
+                get("output").style.display = "none";
             }
            
 
