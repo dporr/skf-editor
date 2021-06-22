@@ -187,3 +187,5 @@ div{
     position: absolute; /*Use the window as reference*/ 
     left: 60vw; /*Where the editor ends*/ 
 }
+
+.browser-control { padding: 5px;}

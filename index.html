@@ -298,8 +298,36 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 	</div>
 	</div>
 	<div id="realtime-status" class="wrapp" style="position: fixed;">
-		<div class="browser-navigation" style="border:lawngreen 5px; display: block; height: 60px;">
-
+		<div class="browser-navigation" style="border:lawngreen 5px; display: block; height: auto;">
+			<div class="browser-navigation"  style="display: inline-block; position:inherit">
+                <div class="browser-control"style="display: flex; position:initial;">
+                    <div class="browser-control" style="display: block; position:inherit;">
+                        <button aria-label="Go Back" disabled=""class="browser-control">
+                            <svg fill="none" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" 
+                            viewBox="0 0 24 24" style="vertical-align: middle;">
+                            <path fill="currentColor" d="M9.728 12.5l5.855-5.664L14.72 6 8 12.5l6.72 6.5.863-.886z">                                
+                            </path></svg>
+                        </button>
+                        <button aria-label="Go Forward" disabled="" class="browser-control">
+                            <svg fill="none" preserveAspectRatio="xMidYMid meet" height="1em" width="1em"
+                             viewBox="0 0 24 24" style="vertical-align: middle;"><path fill="currentColor"
+                              d="M13.855 12.5L8 18.164l.864.836 6.719-6.5L8.863 6 8 6.886z"></path></svg>
+                        </button>
+                        <button aria-label="Refresh" class="browser-control" >
+                                <svg fill="none" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" 
+                                viewBox="0 0 24 24" style="vertical-align: middle;">
+                                <path fill="currentColor" d="M16.972 15.829a5.566 5.566
+                                0 01-4.33 2.04c-3.048 0-5.52-2.404-5.52-5.369 0-2.966 2.472-5.37 5.52-5.37 2.587 
+                                0 4.758 1.733 5.356 4.07H12.72v1.3h6.752V6h-1.345v2.788A6.728 6.728 0 0012.642 
+                                6C8.952 6 5.96 8.91 5.96 12.5S8.952 19 12.64 19c2.064 0 3.91-.91 5.135-2.34z">
+                            </path></svg>
+                        </button>
+                    </div>
+                    <div class="browser-control" id="address-bar" style="width: 650;">
+                     <input aria-label="Address Bar Input" value="https://demo.skf.owasp/" style="width: inherit;height: 25px;">
+                    </div>
+                </div>
+                </div>
 		</div>
 		<div class="preview" id="browser" style="display: block;">
 			<iframe src="editor.html" style="border:none;display:block;width: 100%; height: 100%;"></iframe>
