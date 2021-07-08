@@ -16,7 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 import logging.config
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, render_template
 from flask_cors import CORS, cross_origin
 from editor import settings
 
@@ -24,7 +24,8 @@ from editor.api.terminal.endpoints.terminal import ns as terminal_namespace
 from editor.api.restplus import api
 
 def create_app():
-    flask_app = Flask(__name__)
+    flask_app = Flask(__name__, static_url_path='/assets', static_folder='assets')
+
     configure_app(flask_app)
     initialize_app(flask_app)
     return flask_app
@@ -47,6 +48,31 @@ def initialize_app(flask_app):
 app = create_app()
 cors = CORS(app, resources={r"/api/*": {"origins": settings.ORIGINS}})
 log = logging.getLogger(__name__)
+
+
+@app.route("/")
+def start():
+    return render_template("index.html")
+
+
+@app.route("/editor")
+def editor():
+    return render_template("editor.html")
+
+
+@app.route("/console")
+def console():
+    return render_template("console.html")
+
+
+@app.route("/files")
+def files():
+    return render_template("files.html")
+
+
+@app.route("/terminal")
+def terminal():
+    return render_template("terminal.html")
 
 
 def main():
