@@ -4478,36 +4478,36 @@ var ICEcoder = {
     setTabWidths: function(posOnlyNewTab) {
         let availWidth, avgWidth, tabWidth, lastLeft, lastWidth;
 
-        if (this.ready) {
-            availWidth = parseInt(this.content.style.width, 10) - 53 - 22 - 10; // - left margin - new tab - right margin
-            avgWidth = (availWidth / this.openFiles.length ) - 18;
-            tabWidth = -18; // Incl 18px offset
-            lastLeft = 53;
-            lastWidth = 0;
-            this.tabLeftPos = [];
-            for (let i = 0; i < this.openFiles.length; i++) {
-                if (true === posOnlyNewTab) {
-                    i = this.openFiles.length;
-                };
-                tabWidth = this.openFiles.length * (150 + 18) > availWidth
-                    ? parseInt(avgWidth * i, 10) - parseInt(avgWidth * (i - 1), 10)
-                    : 150;
-                lastLeft = 0 === i
-                    ? 53
-                    : parseInt(get('tab' + i).style.left, 10);
-                lastWidth = 0 === i
-                    ? 0
-                    : parseInt(get('tab' + i).style.width, 10) + 18;
-                if (false === posOnlyNewTab) {
-                    get('tab' + (i + 1)).style.left = (lastLeft + lastWidth) + "px";
-                    get('tab' + (i + 1)).style.width = tabWidth + "px";
-                } else {
-                    tabWidth = -18;
-                }
-                this.tabLeftPos.push(lastLeft + lastWidth);
-            }
-            //get('newTab').style.left = (lastLeft + lastWidth + tabWidth + 18) + "px";
-        }
+        // if (this.ready) {
+        //     availWidth = parseInt(this.content.style.width, 10) - 53 - 22 - 10; // - left margin - new tab - right margin
+        //     avgWidth = (availWidth / this.openFiles.length ) - 18;
+        //     tabWidth = -18; // Incl 18px offset
+        //     lastLeft = 53;
+        //     lastWidth = 0;
+        //     this.tabLeftPos = [];
+        //     for (let i = 0; i < this.openFiles.length; i++) {
+        //         if (true === posOnlyNewTab) {
+        //             i = this.openFiles.length;
+        //         };
+        //         tabWidth = this.openFiles.length * (150 + 18) > availWidth
+        //             ? parseInt(avgWidth * i, 10) - parseInt(avgWidth * (i - 1), 10)
+        //             : 150;
+        //         lastLeft = 0 === i
+        //             ? 53
+        //             : parseInt(get('tab' + i).style.left, 10);
+        //         lastWidth = 0 === i
+        //             ? 0
+        //             : parseInt(get('tab' + i).style.width, 10) + 18;
+        //         if (false === posOnlyNewTab) {
+        //             get('tab' + (i + 1)).style.left = (lastLeft + lastWidth) + "px";
+        //             get('tab' + (i + 1)).style.width = tabWidth + "px";
+        //         } else {
+        //             tabWidth = -18;
+        //         }
+        //         this.tabLeftPos.push(lastLeft + lastWidth);
+        //     }
+        //     //get('newTab').style.left = (lastLeft + lastWidth + tabWidth + 18) + "px";
+        // }
     },
 
     // Tab dragging start
