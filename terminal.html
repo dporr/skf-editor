@@ -79,7 +79,7 @@ sendCmd = function(command) {
 	};
 
 	// Send the XHR request
-	xhr.open("POST", parent.ICEcoder.iceLoc + "/lib/terminal-xhr.php?csrf=" + parent.ICEcoder.csrf, true);
+	xhr.open("POST", "http://0.0.0.0:1337/api/terminal/command", true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xhr.send('command=' + encodeURIComponent(command));
 }
