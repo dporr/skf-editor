@@ -4252,12 +4252,12 @@ var ICEcoder = {
         //this.style.color = ICEcoder.colorSelectedText"
         //onmouseout="this.style.color = thisColor">'
         newTabDiv.style.display = "inline-block";
-        get('tab' + (this.openFiles.length)).style.position = "inherit";
+        newTabDiv.style.position = "inherit";
         fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
-        get('tab' + (this.openFiles.length)).innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
-        get('tab' + (this.openFiles.length)).title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
-        get('tab' + (this.openFiles.length)).className = "tab ext-" + fileExt;
+        newTabDiv.innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
+        newTabDiv.title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
+        newTabDiv.className = "tab ext-" + fileExt;
 
         // Set the widths
         this.setTabWidths(false);
