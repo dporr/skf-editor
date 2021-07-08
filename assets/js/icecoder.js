@@ -72,6 +72,7 @@ var ICEcoder = {
     openSeconds:           0,             // Number of seconds ICEcoder has been open for
     indexing:              false,         // Indicates if ICEcoder is currently indexing
     ready:                 false,         // Indicates if ICEcoder is ready for action
+    openTabs:               0,
 
     // Set our aliases
     //DOM elements by id
@@ -4238,6 +4239,7 @@ var ICEcoder = {
         this.openFiles.push(shortURL);
 
         // Setup a new tab
+        this.openTabs++;
         closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
         newTabDiv = document.createElement('div');
         newTabDiv.class = "tab"
@@ -4312,7 +4314,7 @@ var ICEcoder = {
         let folderFileElems, fileLink;
 
         // For all open tabs...
-        for (let i = 1; i <= this.savedPoints.length; i++) {
+        for (let i = 1; i <= this.openTabs; i++) {
             // Set the close tab icon BG color according to save status
             if (get('tab' + i).childNodes[0]) {
                 get('tab' + i).childNodes[0].childNodes[0].style.backgroundColor = this.savedPoints[i - 1] != this.getcMInstance(i).changeGeneration()
@@ -4406,6 +4408,7 @@ var ICEcoder = {
             // clear the rightmost tab (or only one left in a 1 tab scenario) & remove from the array
             tabToDelete = get('tab' + this.openFiles.length)
             get("tabsContainer").removeChild(tabToDelete)
+            this.openTabs--;
             // get('tab' + this.openFiles.length).style.display = "none";
             // get('tab' + this.openFiles.length).innerHTML = "";
             // get('tab' + this.openFiles.length).title = "";
