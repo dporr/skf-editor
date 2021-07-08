@@ -116,70 +116,70 @@ var ICEcoder = {
         // Set the time since last user interaction
         this.autoLogoutTimer = 0;
 
-        // Start our interval timer, runs every second
-        this.oneSecondInt = setInterval(function(ic) {
-            ic.autoLogoutTimer++;
-            let unsavedFiles = false;
+        // // Start our interval timer, runs every second
+        // this.oneSecondInt = setInterval(function(ic) {
+        //     ic.autoLogoutTimer++;
+        //     let unsavedFiles = false;
 
-            // Check if we have any unsaved files
-            for(let i = 1; i <= ic.savedPoints.length; i++) {
-                if (ic.savedPoints[i - 1] !== ic.getcMInstance(i).changeGeneration()) {
-                    unsavedFiles = true;
-                }
-            }
+        //     // Check if we have any unsaved files
+        //     for(let i = 1; i <= ic.savedPoints.length; i++) {
+        //         if (ic.savedPoints[i - 1] !== ic.getcMInstance(i).changeGeneration()) {
+        //             unsavedFiles = true;
+        //         }
+        //     }
 
-            // Show an auto-logout warning 60 secs before a logout
-            if(false === unsavedFiles && ic.autoLogoutMins > 1 && ic.autoLogoutTimer == (ic.autoLogoutMins * 60) - 60) {
-                ic.autoLogoutWarningScreen();
-            }
+        //     // Show an auto-logout warning 60 secs before a logout
+        //     if(false === unsavedFiles && ic.autoLogoutMins > 1 && ic.autoLogoutTimer == (ic.autoLogoutMins * 60) - 60) {
+        //         ic.autoLogoutWarningScreen();
+        //     }
 
-            if (get('autoLogoutIFrame') && get('autoLogoutIFrame').contentWindow.document.getElementById('timeRemaning')) {
-                get('autoLogoutIFrame').contentWindow.document.getElementById('timeRemaning').innerHTML =
-                    ic.autoLogoutTimer > 0
-                        ? (ic.autoLogoutMins * 60) - ic.autoLogoutTimer
-                        : 0;
-            }
+        //     if (get('autoLogoutIFrame') && get('autoLogoutIFrame').contentWindow.document.getElementById('timeRemaning')) {
+        //         get('autoLogoutIFrame').contentWindow.document.getElementById('timeRemaning').innerHTML =
+        //             ic.autoLogoutTimer > 0
+        //                 ? (ic.autoLogoutMins * 60) - ic.autoLogoutTimer
+        //                 : 0;
+        //     }
 
-            // If there aren't any unsaved files, we have a timeout period > 0 and the time is up, we can logout
-            if (false === unsavedFiles && ic.autoLogoutMins > 0 && ic.autoLogoutTimer >= ic.autoLogoutMins * 60) {
-                ic.logout('autoLogout');
-            }
+        //     // If there aren't any unsaved files, we have a timeout period > 0 and the time is up, we can logout
+        //     if (false === unsavedFiles && ic.autoLogoutMins > 0 && ic.autoLogoutTimer >= ic.autoLogoutMins * 60) {
+        //         ic.logout('autoLogout');
+        //     }
 
-            // Increase number of seconds ICEcoder has been open for by 1
-            ic.openSeconds++;
+        //     // Increase number of seconds ICEcoder has been open for by 1
+        //     ic.openSeconds++;
 
-            // Every 5 mins, ping our file to keep the session alive
-            if (0 === ic.openSeconds % 300) {
-                ic.filesFrame.contentWindow.frames['pingActive'].location.href = ic.iceLoc + "/lib/session-active-ping.php";
-            }
+        //     // Every 5 mins, ping our file to keep the session alive
+        //     if (0 === ic.openSeconds % 300) {
+        //         ic.filesFrame.contentWindow.frames['pingActive'].location.href = ic.iceLoc + "/lib/session-active-ping.php";
+        //     }
 
-            // Every 3 seconds, re-index if we're not already busy
-            if (false === ic.indexing && false === ic.loadingFile && 0 === ic.serverQueueItems.length && 0 === ic.openSeconds % 3) {
-                ic.indexing = true;
-                // Get new data
-                let timestampExtra = ic.indexData
-                    ? "?timestamp=" + ic.indexData.timestamps.indexed + "&csrf=" + ic.csrf
-                    : "";
-                fetch(ic.iceLoc + '/lib/indexer.php' + timestampExtra)
-                    .then(function(response) {
-                        // Convert to JSON
-                        return response.json();
-                    }).then(function(data) {
-                    if (data.timestamps.changed) {
-                        ic.indexData = data;
-                        // If we have git diff data
-                        if (data.gitDiff) {
-                            ic.updateGitDiffPane();
-                        }
-                        // If we have git content data
-                        if (data.gitContent) {
-                            ic.highlightGitDiffs();
-                        }
-                    }
-                    ic.indexing = false;
-                });
-            }
-        }, 1000, this);
+        //     // Every 3 seconds, re-index if we're not already busy
+        //     if (false === ic.indexing && false === ic.loadingFile && 0 === ic.serverQueueItems.length && 0 === ic.openSeconds % 3) {
+        //         ic.indexing = true;
+        //         // Get new data
+        //         let timestampExtra = ic.indexData
+        //             ? "?timestamp=" + ic.indexData.timestamps.indexed + "&csrf=" + ic.csrf
+        //             : "";
+        //         fetch(ic.iceLoc + '/lib/indexer.php' + timestampExtra)
+        //             .then(function(response) {
+        //                 // Convert to JSON
+        //                 return response.json();
+        //             }).then(function(data) {
+        //             if (data.timestamps.changed) {
+        //                 ic.indexData = data;
+        //                 // If we have git diff data
+        //                 if (data.gitDiff) {
+        //                     ic.updateGitDiffPane();
+        //                 }
+        //                 // If we have git content data
+        //                 if (data.gitContent) {
+        //                     ic.highlightGitDiffs();
+        //                 }
+        //             }
+        //             ic.indexing = false;
+        //         });
+        //     }
+        // }, 1000, this);
 
         // ICEcoder is ready to start using
         this.ready = true;
