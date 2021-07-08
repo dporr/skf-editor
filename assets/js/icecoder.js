@@ -4403,10 +4403,12 @@ var ICEcoder = {
             this.content.contentWindow['cM' + this.cMInstances[closeTabNum - 1] + 'diff'].getWrapperElement().style.display = "none";
             this.cMInstances.splice(closeTabNum - 1, 1);
             // clear the rightmost tab (or only one left in a 1 tab scenario) & remove from the array
-            get('tab' + this.openFiles.length).style.display = "none";
-            get('tab' + this.openFiles.length).innerHTML = "";
-            get('tab' + this.openFiles.length).title = "";
-            get('tab' + this.openFiles.length).className = "";
+            tabToDelete = get('tab' + this.openFiles.length)
+            get("tabsContainer").removeChild(tabToDelete)
+            // get('tab' + this.openFiles.length).style.display = "none";
+            // get('tab' + this.openFiles.length).innerHTML = "";
+            // get('tab' + this.openFiles.length).title = "";
+            // get('tab' + this.openFiles.length).className = "";
             this.openFiles.pop();
             this.openFileMDTs.pop();
             this.openFileVersions.pop();
