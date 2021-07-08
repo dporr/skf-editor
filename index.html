@@ -211,20 +211,12 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 		<div id="tabs-element" class="tabs" style="display: block; position: inherit;">
 			<div id="tabsBar" class="tabsBar" oncontextmenu="return false" >
 				<div id="header" class="header" oncontextmenu="return false"></div>
-				<div id="tabsBarButtons" style="position: relative; padding-left: 47px;"><a nohref="" onclick="ICEcoder.closeAllTabs()"><img src="assets/img/nav-close-all.gif" class="closeAllTabs" title="Close all tabs"></a>
+				<div id="tabsBarButtons" style="position: relative; padding-left: 47px;">
+					<a nohref="" onclick="ICEcoder.closeAllTabs()"><img src="assets/img/nav-close-all.gif" class="closeAllTabs" title="Close all tabs"></a>
 					<a nohref="" onclick="ICEcoder.alphaTabs()"><img src="assets/img/nav-alpha.png" class="alphaTabs" title="Alphabetize tabs"></a></div>
-
-				<div id="tab1" class="tab" 
-					onmousedown="if (false === ICEcoder.overCloseLink)
-					{ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); 
-					ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; 
-					if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10));
-					return false}; thisColor = ICEcoder.colorSelectedText;" 
-					onmouseover="thisColor = this.style.color; 
-					this.style.color = ICEcoder.colorSelectedText"
-					onmouseout="this.style.color = thisColor">
-				</div>
+				<div id="tabsContainer">
 				<div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab" style="left: 53px;">+</div>
+				</div>
 			</div>
 		</div>			
 		<div id="find-element" class="tabs" style="display: block; position: inherit;">

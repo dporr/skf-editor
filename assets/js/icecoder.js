@@ -79,7 +79,7 @@ var ICEcoder = {
         const aliasArray = ["header", "files", "fileOptions", "optionsFile", "optionsEdit", "optionsSettings",
          "optionsHelp", "filesFrame", "editor", "tabsBar", "findBar", "terminal", "output", "database",
           "git", "content", "tools", "footer", "versionsDisplay", "splitPaneControls",
-          "splitPaneNamesMain", "splitPaneNamesDiff", "charDisplay", "byteDisplay","center", "tool-icons"];
+          "splitPaneNamesMain", "splitPaneNamesDiff", "charDisplay", "byteDisplay","center", "tool-icons","tabsContainer"];
 
         // Create our ID aliases
         for (let i = 0; i < aliasArray.length; i++) {
@@ -4223,7 +4223,13 @@ var ICEcoder = {
             this.saveFile(false, true);
         }
     },
-
+    verifyCloseTab: function(){
+        if (false === ICEcoder.overCloseLink)
+        {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); 
+        ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; 
+        if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10));
+        return false}; thisColor = ICEcoder.colorSelectedText;
+    },
     // Create a new tab for a file
     createNewTab: function(isNew, shortURL) {
         let closeTabLink, fileName, fileExt;
@@ -4233,7 +4239,19 @@ var ICEcoder = {
 
         // Setup a new tab
         closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
-        get('tab' + (this.openFiles.length)).style.display = "inline-block";
+        newTabDiv = document.createElement('div');
+        newTabDiv.class = "tab"
+        newTabDiv.id = 'tab' + (this.openFiles.length); //Inherited from IceCoder :D
+        newTabDiv.onmousedown = this.verifyCloseTab;
+        tabsContainer = get('tabsContainer')
+        tabsContainer.insertBefore(newTabDiv, get('newTab'));
+
+        //tabTemplate = 'div id="tab1" class="tab" 
+        //onmousedown="" 
+        //onmouseover="thisColor = this.style.color; 
+        //this.style.color = ICEcoder.colorSelectedText"
+        //onmouseout="this.style.color = thisColor">'
+        get('tab' + (this.openFiles.length)).style.display = "block";
         fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
         get('tab' + (this.openFiles.length)).innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
