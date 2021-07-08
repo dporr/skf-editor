@@ -4301,7 +4301,7 @@ var ICEcoder = {
         this.openFiles[tabNum - 1] = newName;
 
         // Setup a new tab
-        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="' + this.iceLoc + '/assets/images/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
+        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="' + /*this.iceLoc + */ '/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
         fileName = this.openFiles[tabNum - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
         get('tab' + tabNum).innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
