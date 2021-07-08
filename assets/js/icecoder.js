@@ -4251,7 +4251,8 @@ var ICEcoder = {
         //onmouseover="thisColor = this.style.color; 
         //this.style.color = ICEcoder.colorSelectedText"
         //onmouseout="this.style.color = thisColor">'
-        get('tab' + (this.openFiles.length)).style.display = "block";
+        newTabDiv.style.display = "inline-block";
+        get('tab' + (this.openFiles.length)).style.position = "inherit";
         fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
         get('tab' + (this.openFiles.length)).innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
@@ -4505,7 +4506,7 @@ var ICEcoder = {
                 }
                 this.tabLeftPos.push(lastLeft + lastWidth);
             }
-            get('newTab').style.left = (lastLeft + lastWidth + tabWidth + 18) + "px";
+            //get('newTab').style.left = (lastLeft + lastWidth + tabWidth + 18) + "px";
         }
     },
 
