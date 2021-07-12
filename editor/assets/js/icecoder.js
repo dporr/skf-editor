@@ -4202,6 +4202,10 @@ var ICEcoder = {
 
     // Starts a new file by setting a few vars & creating a new cM instance
     newTab: function(autoSave) {
+        if(this.openTabs > 5){ 
+            alert("Sorry! Max allowed tabs is 6");
+            return
+            } 
         var cM;
 
         this.cMInstances.push(this.nextcMInstance);
@@ -4234,7 +4238,7 @@ var ICEcoder = {
     // Create a new tab for a file
     createNewTab: function(isNew, shortURL) {
         let closeTabLink, fileName, fileExt;
-
+        
         // Push new file into array
         this.openFiles.push(shortURL);
 
