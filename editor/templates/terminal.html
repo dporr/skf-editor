@@ -61,8 +61,9 @@ sendCmd = function(command) {
 				document.getElementById("user").innerHTML = "&nbsp;&nbsp" + responseJSON.user + "&nbsp;";
 				document.getElementById("cwd").innerHTML = "&nbsp;" + responseJSON.cwd + "&nbsp;";
 				var cmdElem = document.getElementById("commandLine");
-				cmdElem.parentNode.insertBefore(newOutput, cmdElem);
-				parent.document.getElementById("terminal").contentWindow.document.documentElement.scrollTop = document.getElementById('output').scrollHeight;
+				cmdElem.parentElement.insertBefore(newOutput, cmdElem);
+				scrl = document.scrollingElement;
+				scrl.scrollTop = scrl.scrollTop + document.getElementById('output').scrollHeight;
 
 				// Add command onto end of history array or set as last item in array
 				if (0 === currentLine || 0 !== commandHistory[commandHistory.length - 1].indexOf("[[ICEcoder]]:")) {
