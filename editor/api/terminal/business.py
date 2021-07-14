@@ -24,8 +24,8 @@ def get_terminal_output(cmd):
             output_cmd = result.stdout.decode('utf-8')
     except Exception:
         output_cmd = "Error running command"
-    result = '<div class="commandLine"><div class="user">&nbsp;&nbsp; app &nbsp;</div>'+\
+    result = '<div class="commandLine"><div class="user">&nbsp;&nbsp;' + str(context['user'])+' &nbsp;</div>'+\
              '<div class="cwd">&nbsp;' +str(context['cwd'])+ '&nbsp;</div> : ' +str(current_time)+ \
              '<br>'+\
              '<div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div> ' +str(cmd)+ '</div></div><br> ' +str(output_cmd)
-    return {'output': ''+str(result)+'', 'user': 'app', 'cwd':str(context['cwd'])} 
+    return {'output': ''+str(result)+'', 'user': str(context['user']), 'cwd':str(context['cwd'])} 
