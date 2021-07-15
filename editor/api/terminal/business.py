@@ -20,7 +20,7 @@ def get_terminal_output(cmd):
         if cmd[0] == 'cd':
             chdir(cmd)
         else:
-            result = subprocess.run(cmd, stdout=subprocess.PIPE)
+            result = subprocess.run(" ".join(cmd), stdout=subprocess.PIPE, shell=True)
             output_cmd = result.stdout.decode('utf-8')
     except Exception:
         output_cmd = "Error running command"
