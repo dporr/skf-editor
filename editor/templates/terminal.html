@@ -45,8 +45,17 @@ key = function(e) {
 		currentCommand = document.getElementById('command').value;
 	}
 }
+function cleanCMD(){
+	var cmdElem = document.getElementById("commandLine");
+	cmdElem.parentElement.innerHTML = ''
+	//Todo: set the default promt state with a function call
+} 
 
 sendCmd = function(command) {
+	if(command === 'clear'){
+		cleanCMD();
+		return;
+	}
 	// Send command over XHR for response and display
 	xhr = parent.ICEcoder.xhrObj();
 	xhr.onreadystatechange = function() {
