@@ -1,7 +1,4 @@
-//Keep the current state for the history
-history = [];
-history_pointer = 0;
-
+var backSteps = 0;
 //Allow child iframe to report its URL
 window.addEventListener("message", function(event) {
     if (!window.location.origin) {
@@ -20,21 +17,28 @@ function updateAddressBar(value) {
 function openUrl(){
     var urlbar = document.getElementById('addressBarText'); 
     var browserIframe = document.getElementById('browser-iframe');
+    if(browserIframe.src != urlbar.value){
+      backSteps++;
+      browserIframe.src = urlbar.value;
+    }
+    
     //TODO: Validate URL: protocol + FQDN + [:port] + query_string
-    browserIframe.src = urlbar.value; //baking our own XSS lol
+     //baking our own XSS lol
 }
 
-function browseHistory(direction){
-  switch(direction){
-    case 'forward':
-      if(history_pointer < (history.length - 1)) history_pointer++;
-      break;
-    case 'back':
-      if(history_pointer != 0) history_pointer--;
-      break;
-    default:
-      return;
-  }
-  updateAddressBar(history_pointer[history_pointer]);
-  openUrl();
+function iframe_forward(){
+  var browserIframe = document.getElementById('browser-iframe');
+  backSteps++;
+  browserIframe.contentWindow.history.forward();
+  console.log('forward called');
+  console.log(browserIframe.contentWindow.history);
+}
+
+function iframe_back(){
+  var browserIframe = document.getElementById('browser-iframe');
+  if(backSteps < 1) return;
+  backSteps--;
+  browserIframe.contentWindow.history.back();
+  console.log('back called');
+  console.log(browserIframe.contentWindow.history);
 }
