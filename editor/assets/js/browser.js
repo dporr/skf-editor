@@ -6,7 +6,7 @@ window.addEventListener("message", function(event) {
           + window.location.hostname 
           + (window.location.port ? ':' + window.location.port: '');
     }
-    //updateAddressBar(event.data);
+    updateAddressBar(event.data);
   }, false);
 
 function updateAddressBar(value) {
