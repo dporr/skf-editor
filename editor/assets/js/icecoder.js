@@ -354,10 +354,10 @@ var ICEcoder = {
 
             // Carry out any extras...
             if (tool === "terminal") {
-                // Focus on command prompt
-                setTimeout(function(ic){
-                    ic.terminal.contentWindow.document.getElementById('command').focus();
-                }, 0 ,this);
+                // // Focus on command prompt
+                // setTimeout(function(ic){
+                //     ic.terminal.contentWindow.document.getElementById('command').focus();
+                // }, 0 ,this);
             }
 
             // Note which tool we're showing
