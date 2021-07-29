@@ -4705,9 +4705,6 @@ var ICEcoder = {
 
         key = evt.keyCode ?? evt.which ?? evt.charCode;
 
-        // Reset the auto-logout timer
-        this.resetAutoLogoutTimer();
-
         // Mac command key handling (224 = Moz, 91/93 = Webkit Left/Right Apple)
         if (-1 < [224, 91, 93].indexOf(key)) {
             this.cmdKey = true;
