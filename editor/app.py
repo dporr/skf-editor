@@ -21,11 +21,11 @@ from flask_cors import CORS, cross_origin
 from editor import settings
 
 from editor.api.terminal.endpoints.terminal import ns as terminal_namespace
+from editor.api.indexer.endpoints.files import ns as files_namespace
 from editor.api.restplus import api
 
 def create_app():
     flask_app = Flask(__name__, static_url_path='/assets', static_folder='assets')
-
     configure_app(flask_app)
     initialize_app(flask_app)
     return flask_app
@@ -42,8 +42,10 @@ def initialize_app(flask_app):
     """Initialize the SKF Editor app."""
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
+    api.add_namespace(files_namespace)
     api.add_namespace(terminal_namespace)
     flask_app.register_blueprint(blueprint)
+
 
 app = create_app()
 cors = CORS(app, resources={r"/api/*": {"origins": settings.ORIGINS}})
