@@ -28,17 +28,16 @@ function openUrl(){
 
 function iframe_forward(){
   var browserIframe = document.getElementById('browser-iframe');
-  backSteps++;
-  browserIframe.contentWindow.history.forward();
-  console.log('forward called');
-  console.log(browserIframe.contentWindow.history);
+  if(backSteps < (browserIframe.contentWindow.history.length - 1)){
+    backSteps++;
+    browserIframe.contentWindow.history.forward();
+  }
+
 }
 
 function iframe_back(){
   var browserIframe = document.getElementById('browser-iframe');
-  if(backSteps < 1) return;
+  if(backSteps <= 1) return;
   backSteps--;
   browserIframe.contentWindow.history.back();
-  console.log('back called');
-  console.log(browserIframe.contentWindow.history);
 }

@@ -24,6 +24,8 @@ from editor.api.terminal.endpoints.terminal import ns as terminal_namespace
 from editor.api.indexer.endpoints.files import ns as files_namespace
 from editor.api.restplus import api
 
+from lab.XSS import app as lab_app
+
 def create_app():
     flask_app = Flask(__name__, static_url_path='/assets', static_folder='assets')
     configure_app(flask_app)
