@@ -354,10 +354,10 @@ var ICEcoder = {
 
             // Carry out any extras...
             if (tool === "terminal") {
-                // Focus on command prompt
-                setTimeout(function(ic){
-                    ic.terminal.contentWindow.document.getElementById('command').focus();
-                }, 0 ,this);
+                // // Focus on command prompt
+                // setTimeout(function(ic){
+                //     ic.terminal.contentWindow.document.getElementById('command').focus();
+                // }, 0 ,this);
             }
 
             // Note which tool we're showing
@@ -4704,9 +4704,6 @@ var ICEcoder = {
         let key, ctrlOrCmd, cM, thisCM;
 
         key = evt.keyCode ?? evt.which ?? evt.charCode;
-
-        // Reset the auto-logout timer
-        this.resetAutoLogoutTimer();
 
         // Mac command key handling (224 = Moz, 91/93 = Webkit Left/Right Apple)
         if (-1 < [224, 91, 93].indexOf(key)) {
