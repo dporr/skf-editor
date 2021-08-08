@@ -17,3 +17,12 @@ def get_files_output(path="."):
              nodes[hashed]['type'] = 'dir'
              nodes[hashed]['child'].append(get_files_output(full_path))
     return {'files': nodes}
+
+def open_file(hashed=False, save=False):
+    result = {hashed:""}
+    full_path = paths.get(hashed, False)
+    if(not full_path): return result
+    with open(full_path) as f:
+        result[hashed] = f.read()
+    print(result)
+    return result

@@ -1,6 +1,6 @@
 from flask import request
 from flask_restplus import Resource
-from editor.api.indexer.business import get_files_output
+from editor.api.indexer.business import get_files_output, open_file
 from editor.api.indexer.serializers import files_response
 from editor.api.restplus import api
 
@@ -17,4 +17,17 @@ class IndexerFiles(Resource):
         * Privileges required: **none**
         """
         result = get_files_output()
+        return result, 200
+
+@ns.route('/files/<id>')
+@api.response(404, 'Validation error')
+class IndexerFiles(Resource):
+    #@api.marshal_with(file_content_response)
+    @api.response(400, 'No results found')
+    def get(self,id):
+        """
+        Returns a index of files of lab output.
+        * Privileges required: **none**
+        """
+        result = open_file(id)
         return result, 200
