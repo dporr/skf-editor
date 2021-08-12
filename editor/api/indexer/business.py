@@ -4,7 +4,8 @@ from hashlib import md5
 paths = {}
 
 ignore_list = ['.git','.vscode']
-def get_files_output(path="."):
+def get_files_output(path=""):
+    if(not path): path = os.path.join(os.getcwd() , "lab")
     nodes = {}
     path = os.path.realpath(path)
     for node in os.listdir(path):
