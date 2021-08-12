@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Resource
 from editor.api.indexer.business import get_files_output, open_file
-from editor.api.indexer.serializers import files_response
+from editor.api.indexer.serializers import files_response,filecontent_response
 from editor.api.restplus import api
 
 ns = api.namespace('indexer', description='Operations related to terminal')
@@ -22,7 +22,7 @@ class IndexerFiles(Resource):
 @ns.route('/files/<id>')
 @api.response(404, 'Validation error')
 class IndexerFiles(Resource):
-    #@api.marshal_with(file_content_response)
+    @api.marshal_with(filecontent_response)
     @api.response(400, 'No results found')
     def get(self,id):
         """
