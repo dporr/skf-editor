@@ -19,10 +19,10 @@ def get_files_output(path="."):
     return {'files': nodes}
 
 def open_file(hashed=False, save=False):
-    result = {hashed:""}
+    result = {"hash":""}
     full_path = paths.get(hashed, False)
     if(not full_path): return result
     with open(full_path) as f:
-        result[hashed] = f.read()
+        result["hash"] = f.read()
     print(result)
     return result
