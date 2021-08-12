@@ -71,7 +71,7 @@ def console():
 
 @app.route("/files")
 def files():
-    return render_template("files.html")
+    return render_template("test.html")
 
 
 @app.route("/terminal")
