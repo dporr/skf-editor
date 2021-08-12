@@ -3,7 +3,11 @@ from editor.api.restplus import api
 
 
 files_response = api.model('Files response message', {
-    'files': fields.String(required=True, description='Response message of terminal output'),
+    'files': fields.Raw(required=True, description='Response message of terminal output'),
+})
+
+filecontent_response = api.model('Files response message', {
+    'hash': fields.String(required=True, description='Response message of terminal output'),
 })
 
 
