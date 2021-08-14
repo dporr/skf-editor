@@ -18,7 +18,7 @@ let visible= depth>0 ? "block":"block"
 let itemClass = dir? "pft-directory dirOpen": "pft-file ext-php"
 let li = document.createElement('li')
 let a = document.createElement('a')
-li.setAttribute('class', `${itemClass}`)
+li.setAttribute('class', `pft-file`)
 li.setAttribute('id', id)
 a.title = name
 a.setAttribute("nohref", "")
@@ -65,4 +65,21 @@ Object.keys(jsonResponse).forEach(function(key){
     document.body.appendChild(root)
     }
 )
+}
+
+/* Sorry, but I swear I have a solid argument for doing this... Diego - 2021*/
+function loadCSS(){
+    styles = ["files.css","file-type-icons.css","file-types.css"]
+    FILES_CSS = "/assets/files_data/"
+    for(var cssFile in styles){
+        var body = document.getElementsByTagName('head')[0]
+        var link  = document.createElement('link');
+        link.id   = styles[cssFile];
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = FILES_CSS + styles[cssFile];
+        link.media = 'all';
+        body.appendChild(link);
+        console.log("Appended", FILES_CSS+styles[cssFile])
+    }
 }
