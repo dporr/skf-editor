@@ -13,13 +13,14 @@ if(response.ok){
 function createICNode(id, name, dir){
 //console.log("ID", id)
 //We are inheriting all this properties from IceCoder
-let padding = depth;
+let padding = depth * 12;
 let visible= depth>0 ? "block":"block"
 let itemClass = dir? "pft-directory dirOpen":  "pft-file ext-" + name.slice(name.lastIndexOf(".")+1)
 let li = document.createElement('li')
 let a = document.createElement('a')
-li.setAttribute('class', `pft-file`)
+li.setAttribute('class', `${itemClass}`)
 li.setAttribute('id', id)
+li.setAttribute('style', `position:relative; left: ${padding}px`)
 a.title = name
 a.setAttribute("nohref", "")
 a.setAttribute("ondragover", "parent.ICEcoder.overFileFolder('folder', '|'); parent.ICEcoder.highlightFileFolder('|', true);")
@@ -27,8 +28,8 @@ a.setAttribute("ondragleave", "parent.ICEcoder.overFileFolder('folder', ''); par
 a.setAttribute("onmouseover", "parent.ICEcoder.overFileFolder('folder', '|')" )
 a.setAttribute("onmouseout", "parent.ICEcoder.overFileFolder('folder', '')" )
 a.setAttribute("onclick", "parent.ICEcoder.openCloseDir(this)" )
-a.setAttribute("style", `position:relative; color:#eee; font-size:12px; cursor:pointer;left: ${padding}px; display=${visible}` )
-a.setAttribute("class", `${itemClass}`)
+a.setAttribute("style", `position:relative; color:#eee; font-size:12px; cursor:pointer; display=${visible}` )
+//a.setAttribute("class", `${itemClass}`)
 a.textContent=name
 li.appendChild(a)
 return li;
@@ -37,34 +38,31 @@ return li;
 
 function parseFilesResponse(jsonResponse, parent){   
 //console.log(jsonResponse)
-depth++;
-let root = document.createElement('ul')
-if(parent !== undefined){
-    root = parent //document.getElementById(parent)
-}
+root = document.createElement('ul');
+if(parent) root = parent;
 Object.keys(jsonResponse).forEach(function(key){
     node = jsonResponse[key];
    // console.log(node['name'], node['type']);
     if(node['type'] === 'dir' && node.child.length != 0){
         //folder = document.createElement('ul')
-        root.appendChild(createICNode(
+        folder = createICNode(
             key,
             "FOLDER: " + node['name'],
             true
-        ))
-        depth++;
+        )
         root =  document.createElement('ul')
-        parseFilesResponse(node.child[0]['files'],root)
-        depth = 0;
+        root.appendChild(folder)
+        depth++;
+        parseFilesResponse(node.child[0]['files'], root)
+        depth--;
     }else{
         root.appendChild(createICNode(
             key,
             node['name']
         ))
     }
+    })
     document.body.appendChild(root)
-    }
-)
 }
 
 /* Sorry, but I swear I have a solid argument for doing this... Diego - 2021*/
