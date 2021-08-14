@@ -15,7 +15,7 @@ function createICNode(id, name, dir){
 //We are inheriting all this properties from IceCoder
 let padding = depth;
 let visible= depth>0 ? "block":"block"
-let itemClass = dir? "pft-directory dirOpen": "pft-file ext-php"
+let itemClass = dir? "pft-directory dirOpen":  "pft-file ext-" + name.slice(name.lastIndexOf(".")+1)
 let li = document.createElement('li')
 let a = document.createElement('a')
 li.setAttribute('class', `pft-file`)
