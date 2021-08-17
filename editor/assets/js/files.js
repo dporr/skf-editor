@@ -16,18 +16,19 @@ function createICNode(id, name, dir){
 let padding = depth * 12;
 let visible= depth>0 ? "block":"block"
 let itemClass = dir? "pft-directory dirOpen":  "pft-file ext-" + name.slice(name.lastIndexOf(".")+1)
+let clickEventHandler = dir? "parent.ICEcoder.openCloseDir(this)": "parent.ICEcoder.openFile()";
 let li = document.createElement('li')
 let a = document.createElement('a')
-li.setAttribute('class', `${itemClass}`)
-li.setAttribute('id', id)
 li.setAttribute('style', `position:relative; left: ${padding}px`)
 a.title = name
+a.setAttribute('class', `${itemClass}`)
+a.setAttribute('id', id)
 a.setAttribute("nohref", "")
-a.setAttribute("ondragover", "parent.ICEcoder.overFileFolder('folder', '|'); parent.ICEcoder.highlightFileFolder('|', true);")
-a.setAttribute("ondragleave", "parent.ICEcoder.overFileFolder('folder', ''); parent.ICEcoder.highlightFileFolder('|', false);") 
-a.setAttribute("onmouseover", "parent.ICEcoder.overFileFolder('folder', '|')" )
+a.setAttribute("ondragover", `parent.ICEcoder.overFileFolder('folder', '${id}'); parent.ICEcoder.highlightFileFolder('${id}', true);`)
+a.setAttribute("ondragleave", `parent.ICEcoder.overFileFolder('folder', ''); parent.ICEcoder.highlightFileFolder('${id}', false);`) 
+a.setAttribute("onmouseover", `parent.ICEcoder.overFileFolder('folder', '${id}')` )
 a.setAttribute("onmouseout", "parent.ICEcoder.overFileFolder('folder', '')" )
-a.setAttribute("onclick", "parent.ICEcoder.openCloseDir(this)" )
+a.setAttribute("onclick", `${clickEventHandler}` )
 a.setAttribute("style", `position:relative; color:#eee; font-size:12px; cursor:pointer; display=${visible}` )
 //a.setAttribute("class", `${itemClass}`)
 a.textContent=name

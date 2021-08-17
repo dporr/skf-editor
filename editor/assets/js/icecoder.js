@@ -1746,7 +1746,7 @@ var ICEcoder = {
 
     // Note which files or folders we are over on mouseover/mouseout
     highlightFileFolder: function(link, highlight) {
-        this.filesFrame.contentWindow.document.getElementById(link).style.background = true === highlight
+        this.filesFrame.contentDocument.getElementById(link).style.background = true === highlight
             ? this.colorDropTgtBGFile
             : '';
     },
