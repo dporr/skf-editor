@@ -3,7 +3,7 @@ from hashlib import md5
 
 paths = {}
 
-ignore_list = ['.git','.vscode']
+ignore_list = ['.git','.vscode', '__pycache__']
 def get_files_output(path=""):
     if(not path): path = os.path.join(os.getcwd() , "lab")
     nodes = {}
@@ -25,5 +25,4 @@ def open_file(hashed=False, save=False):
     if(not full_path): return result
     with open(full_path) as f:
         result["hash"] = f.read()
-    print(result)
     return result
