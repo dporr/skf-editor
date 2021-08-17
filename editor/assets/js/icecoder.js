@@ -4260,7 +4260,7 @@ var ICEcoder = {
         newTabDiv.style.position = "inherit";
         fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
-        newTabDiv.innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
+        newTabDiv.innerHTML = closeTabLink + `<span style='display: inline-block; position:inherit;width: 32px'></span>${fileName}`;
         newTabDiv.title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
         newTabDiv.className = "tab ext-" + fileExt;
 
