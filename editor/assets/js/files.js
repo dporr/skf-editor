@@ -16,7 +16,7 @@ function createICNode(id, name, dir){
 let padding = depth * 12;
 let visible= depth>0 ? "block":"block"
 let itemClass = dir? "pft-directory dirOpen":  "pft-file ext-" + name.slice(name.lastIndexOf(".")+1)
-let clickEventHandler = dir? "parent.ICEcoder.openCloseDir(this)": "parent.ICEcoder.openFile()";
+let clickEventHandler = dir? "parent.ICEcoder.openCloseDir(this)": `parent.ICEcoder.openFile('${id}','${name}')`;
 let li = document.createElement('li')
 let a = document.createElement('a')
 li.setAttribute('style', `position:relative; left: ${padding}px`)

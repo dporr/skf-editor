@@ -1977,7 +1977,7 @@ var ICEcoder = {
     },
 
     // Open a file
-    openFile: function(fileLink) {
+    openFile: async function(fileLink,fileName) {
         let flSplit, line, shortURL, canOpenFile;
 
         if ("undefined" !== typeof fileLink) {
@@ -2010,7 +2010,7 @@ var ICEcoder = {
 
                 if ("/[NEW]" !== shortURL) {
                     fileLink = fileLink.replace(/\//g, "|");
-                    this.serverQueue("add", this.iceLoc + "/lib/file-control.php?action=load&file=" + encodeURIComponent(fileLink) + "&csrf=" + this.csrf + "&lineNumber=" + line, encodeURIComponent(fileLink));
+                    this.instantiateFileContents(fileLink, fileName)
                     this.serverMessage('<b>' + t['Opening File'] + '</b> ' + shortURL.substr(shortURL.lastIndexOf("/") + 1));
                 } else {
                     this.createNewTab(true, shortURL);
@@ -4243,7 +4243,6 @@ var ICEcoder = {
         this.openFiles.push(shortURL);
 
         // Setup a new tab
-        this.openTabs++;
         closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
         newTabDiv = document.createElement('div');
         newTabDiv.class = "tab"
@@ -4279,6 +4278,7 @@ var ICEcoder = {
         if (!isNew) {
             this.setPreviousFiles();
         }
+        this.openTabs++;
     },
 
     // Cycle to next tab
@@ -5085,5 +5085,45 @@ var ICEcoder = {
             // Finally, focus on the editor
             this.focus(-1 < this.editorFocusInstance.indexOf('diff') ? true : false);
         }
+    },
+    instantiateFileContents: function(id, fileName){
+        setTimeout(async function() {
+            if (!parent.ICEcoder.content.contentWindow.createNewCMInstance) {
+                window.location.reload(true);
+            } else {
+                const FILES_API = "http://0.0.0.0:1337/api/indexer/files/";
+                const response = await fetch(FILES_API + id)
+                const content = await response.json();
+                if(!response.ok){
+                    alert(`Cannot retrieve ${fileName} from server.`);
+                    return;
+                }
+                parent.ICEcoder.loadingFile = true;
+                // Reset the various states back to their initial setting
+                selectedTab = parent.ICEcoder.openFiles.length;	// The tab that\'s currently selected
+                // Finally, store all data, show tabs etc
+                parent.ICEcoder.createNewTab(false, `${fileName}`);
+                parent.ICEcoder.cMInstances.push(parent.ICEcoder.nextcMInstance);
+                parent.ICEcoder.setLayout();
+                parent.ICEcoder.content.contentWindow.createNewCMInstance(parent.ICEcoder.nextcMInstance);
+                // Set the value & innerHTML of the code textarea to that of our loaded file plus make it visible (it\'s hidden on ICEcoder\'s load)
+                parent.ICEcoder.switchMode();
+                cM = parent.ICEcoder.getcMInstance();
+                cM.setValue(content['hash']);
+                parent.ICEcoder.savedPoints[parent.ICEcoder.selectedTab - 1] = cM.changeGeneration();
+                parent.ICEcoder.savedContents[parent.ICEcoder.selectedTab - 1] = cM.getValue();
+                //Get the rigth element
+                parent.document.getElementById('content').style.visibility = 'visible';
+                parent.ICEcoder.switchTab(parent.ICEcoder.selectedTab, 'noFocus');
+                setTimeout(function(){parent.ICEcoder.filesFrame.contentWindow.focus();}, 0);
+                // Then clean it up, set the text cursor, update the display and get the character data
+                parent.ICEcoder.contentCleanUp();
+                parent.ICEcoder.content.contentWindow['cM' + parent.ICEcoder.cMInstances[parent.ICEcoder.selectedTab - 1]].removeLineClass(parent.ICEcoder['cMActiveLinecM' + parent.ICEcoder.cMInstances[parent.ICEcoder.selectedTab - 1]], "background");
+                parent.ICEcoder['cMActiveLinecM'+parent.ICEcoder.selectedTab] = parent.ICEcoder.content.contentWindow['cM' + parent.ICEcoder.cMInstances[parent.ICEcoder.selectedTab - 1]].addLineClass(0, "background", "cm-s-activeLine");
+                parent.ICEcoder.nextcMInstance++;
+                parent.ICEcoder.goToLine(1);
+                parent.ICEcoder.loadingFile = false;
+            }
+        }, 4);
     },
 };
