@@ -1,7 +1,7 @@
 from flask import request
 from flask_restplus import Resource
-from editor.api.indexer.business import get_files_output, open_file
-from editor.api.indexer.serializers import files_response,filecontent_response
+from editor.api.indexer.business import get_files_output, open_file, save_file
+from editor.api.indexer.serializers import files_response,filecontent_response,filecontent
 from editor.api.restplus import api
 
 ns = api.namespace('indexer', description='Operations related to terminal')
@@ -30,4 +30,23 @@ class IndexerFiles(Resource):
         * Privileges required: **none**
         """
         result = open_file(id)
+        return result, 200
+
+@ns.route('/files')
+@api.doc(filecontent)
+@api.response(404, 'Validation error', filecontent_response)
+class IndexerFiles(Resource):
+    @api.expect(filecontent)
+    @api.marshal_with(filecontent_response)
+    @api.response(400, 'No results found', filecontent_response)
+    def put(self):
+        """
+        Returns a terminal command output.
+        * Privileges required: **none**
+        """
+        data = request.json
+        print(request.json)
+        id = data.get('hash', "")
+        content = data.get('content', "")
+        result = save_file(id, content)
         return result, 200

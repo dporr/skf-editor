@@ -14,3 +14,7 @@ filecontent_response = api.model('Files response message', {
 files = api.inherit('List of files', {
     'files': fields.List(fields.Nested(files_response))
 })
+
+filecontent = api.model('File contet', {
+    'hash': fields.String(required=True, description='Response message of terminal output'),
+})

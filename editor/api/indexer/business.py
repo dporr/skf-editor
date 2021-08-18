@@ -1,5 +1,6 @@
 import os
 from hashlib import md5
+import re
 
 paths = {}
 
@@ -25,4 +26,13 @@ def open_file(hashed=False, save=False):
     if(not full_path): return result
     with open(full_path) as f:
         result["hash"] = f.read()
+    return result
+
+def save_file(id, content):
+    result = {"status":"Unable to save"}
+    full_path = paths.get(id, False)
+    if(full_path):
+        with open(full_path, 'w') as f:
+            f.writelines(content)
+        result['status'] = 'Ok'
     return result
