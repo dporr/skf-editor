@@ -14,6 +14,7 @@ var ICEcoder = {
     iceLoc:                window.location.origin + window.location.pathname.replace(/\/$/, ""),
 
     // Define settings
+    selectedTabHash:        "",
     filesW:	               250,           // Width of files pane
     minFilesW:             14,            // Min width of files pane
     maxFilesW:             250,           // Max width of files pane
@@ -2013,7 +2014,7 @@ var ICEcoder = {
                     this.instantiateFileContents(fileLink, fileName)
                     this.serverMessage('<b>' + t['Opening File'] + '</b> ' + shortURL.substr(shortURL.lastIndexOf("/") + 1));
                 } else {
-                    this.createNewTab(true, shortURL);
+                    this.createNewTab(true, shortURL, this.thisFileFolderLink);
                 }
                 this.fMIconVis('fMView', 1);
             }
@@ -2095,114 +2096,14 @@ var ICEcoder = {
 
     // Save a file
     saveFile: function(saveAs, newFileAutoSave) {
-        let changes, saveType, filePath, fileExt, pathPrefix;
-        let prettierVersion, editorText, prettierText, sm, opcodes, docShift, startShift, endShift, newContent;
-        filePath = this.openFiles[this.selectedTab - 1];
-        fileExt = filePath.substr(filePath.lastIndexOf(".") + 1);
-        if ("undefined" !== typeof prettier && ["js", "json", "ts", "css", "scss", "less", "html", "xml", "yaml", "md", "php"].indexOf(fileExt) > -1) {
-            switch (fileExt) {
-                case "js": parser = "babel"; break;
-                case "json": parser = "json"; break;
-                case "ts": parser = "typescript"; break;
-                case "css": parser = "css"; break;
-                case "scss": parser = "scss"; break;
-                case "less": parser = "less"; break;
-                case "html": parser = "html"; break;
-                case "xml": parser = "html"; break;
-                case "yaml": parser = "yaml"; break;
-                case "md": parser = "markdown"; break;
-                case "php": parser = "php"; break;
-            }
-            try {
-                prettierVersion = prettier.formatWithCursor(
-                    this.getThisCM().getValue(),
-                    {
-                        parser: parser,
-                        plugins: prettierPlugins,
-                        tabWidth: this.indentSize,
-                        useTabs: "tabs" === this.indentType,
-                        cursorOffset: this.getCharNumFromCursor()
-                    }
-                );
-
-                // Get the text values and split it into lines
-                editorText = difflib.stringAsLines(this.getThisCM().getValue());
-                prettierText = difflib.stringAsLines(prettierVersion.formatted);
-
-                // Create a SequenceMatcher instance that diffs the two sets of lines
-                sm = new difflib.SequenceMatcher(editorText, prettierText);
-
-                // Get the opcodes from the SequenceMatcher instance
-                // Opcodes is a list of 3-tuples describing what changes should be made to the base text in order to yield the new text
-                opcodes = sm.get_opcodes();
-                docShift = 0;
-
-                for (let i = 0; i < opcodes.length; i++) {
-                    // opcode events may be:
-                    // equal   = do nothing for this range
-                    // replace = replace [1]-[2] with [3]-[4]
-                    // insert  = replace [1]-[2] with [3]-[4]
-                    // delete  = replace [1]-[2] with [3]-[4]
-                    // Params to determine if we need to set 1 or 0 shift the start line and end line
-                    startShift = "delete" === opcodes[i][0] && editorText.length === opcodes[i][2] ? 1 : 0;
-                    endShift = "replace" === opcodes[i][0] ? 1 : 0;
-                    if ("equal" !== opcodes[i][0]) {
-                        // Replace or insert
-                        if ("replace" === opcodes[i][0] || "insert" === opcodes[i][0]) {
-                            newContent = "";
-                            // For each of the replace/insert lines in Prettier's version
-                            for (let j = opcodes[i][3]; j < opcodes[i][4]; j++) {
-                                // Build up newContent lines and end with a new line char if not the last line in the range
-                                newContent += prettierText[j];
-                                if (j < opcodes[i][4] - 1) {
-                                    newContent += "\n";
-                                }
-                            }
-                        }
-                        // Delete
-                        if ("delete" === opcodes[i][0]) {
-                            // Not the last line in doc, the newContent is the line after the section we're deleting in editors version
-                            // Else if it's the last line in doc, the content after the section we're deleting is nothing
-                            newContent = editorText.length > opcodes[i][2]
-                                ? editorText[opcodes[i][2]]
-                                : "";
-                        }
-                        // Replace the range with newContent. The range start line and end line adjust according to
-                        // startShift and endShift 1/0 values plus also the +/- docShift which is how much the
-                        // editor document has shifted so far during replace ranges
-                        this.getThisCM().replaceRange(newContent, {line: opcodes[i][1] - docShift - startShift, ch: 0}, {line: opcodes[i][2] - docShift - endShift, ch: 1000000}, "+input");
-                        // Work out the +/- document shift based on difference between the editors last line in
-                        // this diff range and Prettiers last line in this diff range
-                        docShift = opcodes[i][2] - opcodes[i][4];
-                    }
-                }
-                // If we don't have text selected, we have a cursor, so move the cursor to new place in
-                // the prettified version now we've made adjustments
-                if (false === this.getThisCM().somethingSelected()) {
-                    this.setCursorByCharNum(prettierVersion.cursorOffset);
-                }
-            } catch(err) {
-                get("toolLinkOutput").className = "highlight error";
-                this.outputMsg('<div style="background: #b00; padding: 1px 3px; border-radius: 3px; font-family: monospace;">Syntax error in ' + this.openFiles[this.selectedTab - 1].replace(iceRoot, "") + '</div>\n' + err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-            }
-        }
+        tab = ic.openFiles[ic.selectedTab - 1]
+        content = this.getThisCM().getValue()
+        id = this.selectedTabHash
         setTimeout(function() {
-            // If we're not 'saving as', establish changes between current and known saved version from array
-            if (false === saveAs) {
-                changes = ic.getChangesToSave();
-            }
-
-            saveType = saveAs ? "saveAs" : "save";
-            filePath = ic.openFiles[ic.selectedTab - 1].replace(iceRoot, "").replace(/\//g, "|");
-            if ("|[NEW]" === filePath && 0 < ic.selectedFiles.length) {
-                pathPrefix = ic.selectedFiles[0];
-                filePath = -1 == pathPrefix.lastIndexOf(".") || pathPrefix.lastIndexOf(".") < pathPrefix.lastIndexOf("|")
-                    ? pathPrefix + filePath
-                    : "|[NEW]";
-            }
-            filePath = filePath.replace("||", "|");
-            ic.serverQueue("add", ic.iceLoc + "/lib/file-control.php?action=save&fileMDT=" + ic.openFileMDTs[ic.selectedTab - 1] + "&fileVersion=" + ic.openFileVersions[ic.selectedTab - 1] + "&saveType=" + saveType + "&newFileAutoSave=" + newFileAutoSave + "&tabNum=" + ic.selectedTab + "&csrf=" + ic.csrf,encodeURIComponent(filePath), changes);
-            ic.serverMessage('<b>' + t['Saving'] + '</b> ' + ic.openFiles[ic.selectedTab - 1].replace(iceRoot, "").replace(/^\/|/g, ''));
+            //debug the saving function
+            ic.putFile(id, content)
+            //ic.serverQueue("add", ic.iceLoc + "/lib/file-control.php?action=save&fileMDT=" + ic.openFileMDTs[ic.selectedTab - 1] + "&fileVersion=" + ic.openFileVersions[ic.selectedTab - 1] + "&saveType=" + saveType + "&newFileAutoSave=" + newFileAutoSave + "&tabNum=" + ic.selectedTab + "&csrf=" + ic.csrf,encodeURIComponent(filePath), changes);
+            ic.serverMessage('<b>' + t['Saving'] + '</b> ' + ic.openFiles[ic.selectedTab - 1]);
         }, 0, ic);
     },
 
@@ -4231,12 +4132,14 @@ var ICEcoder = {
     verifyCloseTab: function(){
         if (false === ICEcoder.overCloseLink)
         {ICEcoder.switchTab(parseInt(this.id.slice(3), 10)); 
-        ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))}; 
+        ICEcoder.tabDragStart(parseInt(this.id.slice(3), 10))
+        this.selectedTabHash = this.data-id;
+        }; 
         if (1 === event.button) {ICEcoder.closeTab(parseInt(this.id.slice(3), 10));
         return false}; thisColor = ICEcoder.colorSelectedText;
     },
     // Create a new tab for a file
-    createNewTab: function(isNew, shortURL) {
+    createNewTab: function(isNew, shortURL, id) {
         let closeTabLink, fileName, fileExt;
         
         // Push new file into array
@@ -4248,6 +4151,8 @@ var ICEcoder = {
         newTabDiv.class = "tab"
         newTabDiv.id = 'tab' + (this.openFiles.length); //Inherited from IceCoder :D
         newTabDiv.onmousedown = this.verifyCloseTab;
+        newTabDiv.setAttribute("data-id", `${id}`)
+        this.selectedTabHash = `${id}`
         tabsContainer = get('tabsContainer')
         tabsContainer.insertBefore(newTabDiv, get('newTab'));
 
@@ -5102,7 +5007,7 @@ var ICEcoder = {
                 // Reset the various states back to their initial setting
                 selectedTab = parent.ICEcoder.openFiles.length;	// The tab that\'s currently selected
                 // Finally, store all data, show tabs etc
-                parent.ICEcoder.createNewTab(false, `${fileName}`);
+                parent.ICEcoder.createNewTab(false, `${fileName}`, `${id}`);
                 parent.ICEcoder.cMInstances.push(parent.ICEcoder.nextcMInstance);
                 parent.ICEcoder.setLayout();
                 parent.ICEcoder.content.contentWindow.createNewCMInstance(parent.ICEcoder.nextcMInstance);
@@ -5126,4 +5031,13 @@ var ICEcoder = {
             }
         }, 4);
     },
+    putFile: async function(id, content){
+        const FILES_API = "http://0.0.0.0:1337/api/indexer/files";
+        const HEADERS ={ 'Content-Type': 'application/json' }
+        const response = await fetch(FILES_API, {method:"PUT",headers:HEADERS,body:JSON.stringify({"hash":id, "content": content})})
+        const files = await response.json();
+            if(response.ok){
+               console.log(response.body)
+            }
+        },
 };
