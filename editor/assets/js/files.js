@@ -62,8 +62,8 @@ Object.keys(jsonResponse).forEach(function(key){
             node['name']
         ))
     }
-    })
     document.body.appendChild(root)
+    })
 }
 
 /* Sorry, but I swear I have a solid argument for doing this... Diego - 2021*/
