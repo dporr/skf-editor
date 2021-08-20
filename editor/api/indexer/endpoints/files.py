@@ -4,7 +4,7 @@ from editor.api.indexer.business import get_files_output, open_file, save_file
 from editor.api.indexer.serializers import files_response,filecontent_response,filecontent
 from editor.api.restplus import api
 
-ns = api.namespace('indexer', description='Operations related to terminal')
+ns = api.namespace('indexer', description='Operations related to files')
 
 @ns.route('/files')
 @api.response(404, 'Validation error', files_response)
@@ -26,7 +26,7 @@ class IndexerFiles(Resource):
     @api.response(400, 'No results found')
     def get(self,id):
         """
-        Returns a index of files of lab output.
+        Returns the file contents based on the file hash id
         * Privileges required: **none**
         """
         result = open_file(id)
@@ -41,7 +41,7 @@ class IndexerFiles(Resource):
     @api.response(400, 'No results found', filecontent_response)
     def put(self):
         """
-        Returns a terminal command output.
+        Saves the file based on the hash id received in the json payload
         * Privileges required: **none**
         """
         data = request.json
