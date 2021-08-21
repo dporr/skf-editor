@@ -218,7 +218,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						style="width:25px;height: 25px; padding-left: 0px;"/> </a>
 					</div>
 				<div id="tabsContainer" class="wrapp" style="position: relative;">
-				<div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab">+</div>
+				<!-- <div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab">+</div> -->
 				</div>
 			</div>
 		</div>			
@@ -229,8 +229,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						<div class="findText">Find</div>
 						<input type="text" name="find" id="find" class="textbox find" oninput="ICEcoder.findReplaceOnInput()">
 		
-						<div class="selectWrapper" style="width: 41px">
-							<select name="connector" onchange="ICEcoder.findReplaceOptions()" style="width: 40px; margin-top: 4px">
+						<div class="selectWrapper" style="width: 0px">
+							<select name="connector" onchange="ICEcoder.findReplaceOptions()" style="display: none;">
 								<option selected="selected">in</option>
 								<option>and</option>
 							</select>
@@ -246,8 +246,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						</div>
 						<input type="text" name="replace" id="replace" class="textbox replace" style="display: none">
 						<div class="targetText" id="rTarget" style="display: none">in</div>
-							<div class="selectWrapper" style="width: 104px">
-								<select name="target" onchange="ICEcoder.updateResultsDisplay('this document' === this.value ? 'show' : 'hide')" style="width: 101px; margin-top: 4px; margin-left: 2px">
+							<div class="selectWrapper" style="width: 0px">
+								<select name="target" onchange="ICEcoder.updateResultsDisplay('this document' === this.value ? 'show' : 'hide')" style="display: none;">
 									<option selected="selected">this document</option>
 									<option>open documents</option>
 									<option>selected files</option>
@@ -262,8 +262,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
 				</form>
 				<form onsubmit="return ICEcoder.goToLine(get('goToLineNo').value, 0, false)">
-					<div class="goLine" >Go to Line <input type="text" name="goToLine" maxlength="5" id="goToLineNo" onkeyup="ICEcoder.goToLine(this.value, 0, true)" class="textbox goToLine"></div>
-					<div class="view" title="View" onclick="ICEcoder.openPreviewWindow()" id="fMView"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+					<div class="goLine" style="padding: 5px;">Go to Line <input type="text" name="goToLine" maxlength="5" id="goToLineNo" onkeyup="ICEcoder.goToLine(this.value, 0, true)" class="textbox goToLine"></div>
+					<div class="view" title="View" onclick="ICEcoder.openPreviewWindow()" style="display: none;" id="fMView"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z"></path>
 			<rect x="4" y="4" width="16" height="16" rx="1"></rect>
 			<line x1="4" y1="8" x2="20" y2="8"></line>
