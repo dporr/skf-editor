@@ -27,5 +27,5 @@ def get_terminal_output(cmd):
     result = '<div class="commandLine"><div class="user">&nbsp;&nbsp;' + str(context['user'])+' &nbsp;</div>'+\
              '<div class="cwd">&nbsp;' +str(context['cwd'])+ '&nbsp;</div> : ' +str(current_time)+ \
              '<br>'+\
-             '<div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div> ' +str(cmd)+ '</div></div><br> ' +str(output_cmd)
+             '<div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div> ' +str(" ".join(cmd))+ '</div></div><br> ' +str(output_cmd)
     return {'output': ''+str(result)+'', 'user': str(context['user']), 'cwd':str(context['cwd'])} 
