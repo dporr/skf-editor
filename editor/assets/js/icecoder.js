@@ -2012,7 +2012,7 @@ var ICEcoder = {
                 if ("/[NEW]" !== shortURL) {
                     fileLink = fileLink.replace(/\//g, "|");
                     this.instantiateFileContents(fileLink, fileName)
-                    this.serverMessage('<b>' + t['Opening File'] + '</b> ' + shortURL.substr(shortURL.lastIndexOf("/") + 1));
+                    this.serverMessage('<b>' + t['Opening File'] + '</b> ' + fileName);
                 } else {
                     this.createNewTab(true, shortURL, this.thisFileFolderLink);
                 }
