@@ -21,7 +21,7 @@ let li = document.createElement('li')
 let a = document.createElement('a')
 li.setAttribute('style', `position:relative; left: ${padding}px; display:${visible}`)
 li.setAttribute('id', "li-"+id)
-li.setAttribute("onclick","toggleFolderElements(event)")
+dir? li.setAttribute("onclick","toggleFolderElements(event)"):"";
 a.title = name
 a.setAttribute('class', `${itemClass}`)
 a.setAttribute('id', id)
