@@ -50,7 +50,7 @@ Object.keys(jsonResponse).forEach(function(key){
         //folder = document.createElement('ul')
         folder = createICNode(
             key,
-            "FOLDER: " + node['name'],
+            node['name'],
             true
         )
         if(typeof parent === 'undefined') root =  document.createElement('ul')
