@@ -1,6 +1,9 @@
 # skf-editor [GSOC'21]
 
-This project is released as contribution to the [OWASP Security Knowledge framework](https://www.securityknowledgeframework.org/) and developed during [Google Summer of Code 2021](https://summerofcode.withgoogle.com/projects/#5895727206629376) by the student [Diego Porras](https://www.linkedin.com/in/daporras/). All the code contributed during GSoC21 duration is hosted under this repository.
+This project is released as contribution to the [OWASP Security Knowledge framework](https://www.securityknowledgeframework.org/) and developed during [Google Summer of Code 2021](https://summerofcode.withgoogle.com/projects/#5895727206629376) by the student [Diego Porras](https://www.linkedin.com/in/daporras/). All the code contributed during GSoC21 duration is hosted under this repository with the hashtag #GSoC21. This project is meant to be mantained after GSoC21 and the aforementined hashtag will be deprecated to clearly separate the during-GSoC, and, post-GSoC21 work.
+
+# Note to my mentor
+My sincere thanks to my mentor, Glenn Ten Cate, who has been one of the most patient, precise, and professional people possible during this process. The knowledge, ideas, and motivation that you shared with me during GSoC21 contributed a lot to my personal and professional life.  I hope we can still work on this and new projects.
 
 ### What is SKF?
 Security Knowledge Framework (SKF) is a tool that is used as a guide for building and verifying secure software. It can also be used to train developers about application security. The OWASP Security Knowledge Framework is an expert system web-application that uses the OWASP Application Security Verification Standard and other resources. It can be used to support developers in pre-development (security by design) as well as after code is released (OWASP ASVS Level 1-3).
