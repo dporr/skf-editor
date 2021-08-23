@@ -140,6 +140,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 	</div>
 	
 	<div id="files" class="files" onmouseover="ICEcoder.changeFilesW('expand')" onmouseout="ICEcoder.changeFilesW('contract'); ICEcoder.hideFileMenu();" oncontextmenu="return false" style="width: 250px; background: rgb(56, 56, 56) none repeat scroll 0% 0%;">
+		<spa class="title">File explorer</spa>
 		<!-- <div id="fileNav" class="fileNav">
 			<ul>
 				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsFile')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsFile')}" id="optionsFileNav">File</a></li>
@@ -217,7 +218,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						style="width:25px;height: 25px; padding-left: 0px;"/> </a>
 					</div>
 				<div id="tabsContainer" class="wrapp" style="position: relative;">
-				<div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab">+</div>
+				<!-- <div class="newTab" onclick="ICEcoder.newTab(false)" id="newTab">+</div> -->
 				</div>
 			</div>
 		</div>			
@@ -228,8 +229,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						<div class="findText">Find</div>
 						<input type="text" name="find" id="find" class="textbox find" oninput="ICEcoder.findReplaceOnInput()">
 		
-						<div class="selectWrapper" style="width: 41px">
-							<select name="connector" onchange="ICEcoder.findReplaceOptions()" style="width: 40px; margin-top: 4px">
+						<div class="selectWrapper" style="width: 0px">
+							<select name="connector" onchange="ICEcoder.findReplaceOptions()" style="display: none;">
 								<option selected="selected">in</option>
 								<option>and</option>
 							</select>
@@ -245,8 +246,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 						</div>
 						<input type="text" name="replace" id="replace" class="textbox replace" style="display: none">
 						<div class="targetText" id="rTarget" style="display: none">in</div>
-							<div class="selectWrapper" style="width: 104px">
-								<select name="target" onchange="ICEcoder.updateResultsDisplay('this document' === this.value ? 'show' : 'hide')" style="width: 101px; margin-top: 4px; margin-left: 2px">
+							<div class="selectWrapper" style="width: 0px">
+								<select name="target" onchange="ICEcoder.updateResultsDisplay('this document' === this.value ? 'show' : 'hide')" style="display: none;">
 									<option selected="selected">this document</option>
 									<option>open documents</option>
 									<option>selected files</option>
@@ -261,8 +262,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 					<input type="hidden" name="csrf" value="21b42b714addaee46457886b1bfdddfe">
 				</form>
 				<form onsubmit="return ICEcoder.goToLine(get('goToLineNo').value, 0, false)">
-					<div class="goLine" >Go to Line <input type="text" name="goToLine" maxlength="5" id="goToLineNo" onkeyup="ICEcoder.goToLine(this.value, 0, true)" class="textbox goToLine"></div>
-					<div class="view" title="View" onclick="ICEcoder.openPreviewWindow()" id="fMView"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+					<div class="goLine" style="padding: 5px;">Go to Line <input type="text" name="goToLine" maxlength="5" id="goToLineNo" onkeyup="ICEcoder.goToLine(this.value, 0, true)" class="textbox goToLine"></div>
+					<div class="view" title="View" onclick="ICEcoder.openPreviewWindow()" style="display: none;" id="fMView"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-browser" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z"></path>
 			<rect x="4" y="4" width="16" height="16" rx="1"></rect>
 			<line x1="4" y1="8" x2="20" y2="8"></line>
@@ -284,7 +285,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 	<div class="footer" id="footer" oncontextmenu="return false">
 		<div class="versionsDisplay" id="versionsDisplay" onclick="ICEcoder.versionsScreen(ICEcoder.openFiles[ICEcoder.selectedTab - 1].replace(/\//g, '|'))" style="left: 260px;"></div>
 		<div class="serverMessage" id="serverMessage" style="left: 260px;"></div>
-		<div class="splitPaneControls" id="splitPaneControls" style="left: 758px;"><div class="off" id="splitPaneControlsOff" title="Single pane" onclick="ICEcoder.setSplitPane('off')" style="opacity: 0.8"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<!-- <div class="splitPaneControls" id="splitPaneControls" style="left: 758px;">
+			<div class="off" id="splitPaneControlsOff" title="Single pane" onclick="ICEcoder.setSplitPane('off')" style="opacity: 0.8"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 		<path stroke="none" d="M0 0h24v24H0z"></path>
 		<rect x="4" y="4" width="16" height="16" rx="2"></rect>
 	</svg>
@@ -295,7 +297,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 	</svg>
 	</div></div>
 		<div class="splitPaneNames" id="splitPaneNamesMain" style="left: 469px;">Main Pane</div>
-		<div class="splitPaneNames" id="splitPaneNamesDiff" style="left: 1009px;">Diff Pane</div>
+		<div class="splitPaneNames" id="splitPaneNamesDiff" style="left: 1009px;">Diff Pane</div> -->
 		<div class="byteDisplay" id="byteDisplay" style="display: none" onclick="ICEcoder.showDisplay('char')"></div>
 		<div class="charDisplay" id="charDisplay" style="display: inline-block" onclick="ICEcoder.showDisplay('byte')"></div>
 	</div>
@@ -316,20 +318,18 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
                              viewBox="0 0 24 24" style="vertical-align: middle;"><path fill="currentColor"
                               d="M13.855 12.5L8 18.164l.864.836 6.719-6.5L8.863 6 8 6.886z"></path></svg>
                         </button>
-                        <button aria-label="Refresh" class="browser-control" >
-                                <svg fill="none" preserveAspectRatio="xMidYMid meet" height="1em" width="1em" 
-                                viewBox="0 0 24 24" style="vertical-align: middle;">
-                                <path fill="currentColor" d="M16.972 15.829a5.566 5.566
-                                0 01-4.33 2.04c-3.048 0-5.52-2.404-5.52-5.369 0-2.966 2.472-5.37 5.52-5.37 2.587 
-                                0 4.758 1.733 5.356 4.07H12.72v1.3h6.752V6h-1.345v2.788A6.728 6.728 0 0012.642 
-                                6C8.952 6 5.96 8.91 5.96 12.5S8.952 19 12.64 19c2.064 0 3.91-.91 5.135-2.34z">
-                            </path></svg>
-                        </button>
+						<input class="urlbutton" type="Submit" value="Go" onclick="openUrl()" style="width: fit-content; height: 100%;" class="browser-control">
                     </div>
-                    <div class="browser-control" id="address-bar" style="width: 30vw;">
-                     <input id="addressBarText" aria-label="Address Bar Input" value="https://demo.skf.owasp/" style="width: inherit;height: 25px;">
+					<!-- Handle enter key on address bar -->
+					<script>
+						function adressBarKeyHandler(e){
+						if(e.target.id === "addressBarText" && e.keyCode == 13)
+							openUrl();
+						}
+					</script>
+                    <div class="browser-control" id="address-bar" onkeypress="adressBarKeyHandler(event)" style="width: 30vw;">
+                     <input id="addressBarText"  aria-label="Address Bar Input" value="https://demo.skf.owasp/" style="width: inherit;height: 25px;">
                     </div>
-					<input class="urlbutton" type="Submit" value="Go" onclick="openUrl()" style="width: fit-content;" class="browser-control">
                 </div>
                 </div>
 		</div>
@@ -345,12 +345,12 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 			<rect x="3" y="4" width="18" height="16" rx="2"></rect>
 				</svg>
 		</div>
-				<div onclick="ICEcoder.toolShowHideToggle('output'); this.className = ''" id="toolLinkOutput" title="Output" style="display: inline-block;"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-list" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<!-- <div onclick="ICEcoder.toolShowHideToggle('output'); this.className = ''" id="toolLinkOutput" title="Output" style="display: inline-block;"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-layout-list" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z"></path>
 			<rect x="4" y="4" width="16" height="6" rx="2"></rect>
 			<rect x="4" y="14" width="16" height="6" rx="2"></rect>
 			</svg>
-			</div>
+			</div> -->
 
 			<div class="closeIcon" style="display: none" id="closeIcon"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 				<path stroke="none" d="M0 0h24v24H0z"></path>

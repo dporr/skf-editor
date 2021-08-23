@@ -51,7 +51,7 @@ function cleanCMD(){
 	//Todo: set the default promt state with a function call
 } 
 
-sendCmd = function(command) {
+sendCmd = function(command, initial) {
 	if(command === 'clear'){
 		cleanCMD();
 		return;
@@ -67,6 +67,11 @@ sendCmd = function(command) {
 				responseText = xhr.responseText;
 				responseJSON = JSON.parse(responseText);
 				newOutput.innerHTML = responseJSON.output;
+				if(initial){
+					document.getElementById("user").innerHTML = "&nbsp;&nbsp" + responseJSON.user + "&nbsp;";
+					document.getElementById("cwd").innerHTML = "&nbsp;" + responseJSON.cwd + "&nbsp;";
+					return;
+				}
 				document.getElementById("user").innerHTML = "&nbsp;&nbsp" + responseJSON.user + "&nbsp;";
 				document.getElementById("cwd").innerHTML = "&nbsp;" + responseJSON.cwd + "&nbsp;";
 				var cmdElem = document.getElementById("commandLine");
@@ -96,14 +101,14 @@ sendCmd = function(command) {
 </script>
 </head>
 
-<body  data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="">
+<body  onload='sendCmd("id", true)' data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="">
 
 <form name="shell" onsubmit="sendCmd(document.getElementById('command').value); return false" method="POST">
 	<pre class="output" id="output"><span style="color: #0a0">ICEcoder v8.0 terminal</span>
 This is a full powered terminal, but will have the permissions of the 'www-data' user.
 The more access rights you give that user, the more this terminal has.
-
-<div class="commandLine" onclick="document.getElementById('command').focus()" id="commandLine"><div class="user" id="user">&nbsp;&nbsp;&nbsp;</div><div class="cwd" id="cwd">&nbsp;&nbsp;</div> : 20:06:12<br><div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div> <input type="text" class="command" id="command" onkeyup="key(event)" tabindex="1" autocomplete="off"></div></pre>
+<div class="commandLine" onclick="document.getElementById('command').focus()" id="commandLine">
+<div class="user" id="user">&nbsp;&nbsp;&nbsp;</div><div class="cwd" id="cwd">&nbsp;&nbsp;</div>&nbsp;&nbsp;<br><div class="promptVLine"></div><div class="promptHLine">─<div class="promptArrow">▶</div></div><input type="text" class="command" id="command" onkeyup="key(event)" tabindex="1" autocomplete="off"></div></pre>
 </form>
 
 

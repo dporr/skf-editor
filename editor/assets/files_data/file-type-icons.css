@@ -1,10 +1,10 @@
 /* Additional file types */
-* {background-image: url("assets/img/color/picker.png");}
 .ext-c::before {background-position: -48px 0 !important;}
 .ext-cpp::before, .ext-ino::before {background-position: -64px 0 !important;}
 .ext-cs::before {background-position: -80px 0 !important;}
 .ext-coffee::before {background-position: -96px 0 !important;}
 .ext-css::before {background-position: -112px 0 !important;}
+.ext-map::before {background-position: -112px 0 !important;}
 .ext-erl::before {background-position: -128px 0 !important;}
 .ext-gif::before {background-position: -144px 0 !important;}
 .ext-go::before {background-position: -160px 0 !important;}
@@ -28,3 +28,7 @@
 .ext-xml::before {background-position: -448px 0 !important;}
 .ext-yaml::before {background-position: -464px 0 !important;}
 .ext-zip::before {background-position: -480px 0 !important;}
+.ext-svg::before {background-position: -32px 0 !important;}
+.ext-ttf::before {background-position: -32px 0 !important;}
+.ext-woff::before {background-position: -32px 0 !important;}
+.ext-eot::before {background-position: -32px 0 !important;}

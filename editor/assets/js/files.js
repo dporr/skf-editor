@@ -14,12 +14,14 @@ function createICNode(id, name, dir){
 //console.log("ID", id)
 //We are inheriting all this properties from IceCoder
 let padding = depth * 12;
-let visible= depth>0 ? "block":"block"
+let visible= depth>0 ? "none":"block"
 let itemClass = dir? "pft-directory dirOpen":  "pft-file ext-" + name.slice(name.lastIndexOf(".")+1)
 let clickEventHandler = dir? "parent.ICEcoder.openCloseDir(this)": `parent.ICEcoder.openFile('${id}','${name}')`;
 let li = document.createElement('li')
 let a = document.createElement('a')
-li.setAttribute('style', `position:relative; left: ${padding}px`)
+li.setAttribute('style', `position:relative; left: ${padding}px; display:${visible}`)
+li.setAttribute('id', "li-"+id)
+dir? li.setAttribute("onclick","toggleFolderElements(event)"):"";
 a.title = name
 a.setAttribute('class', `${itemClass}`)
 a.setAttribute('id', id)
@@ -29,7 +31,7 @@ a.setAttribute("ondragleave", `parent.ICEcoder.overFileFolder('folder', ''); par
 a.setAttribute("onmouseover", `parent.ICEcoder.overFileFolder('folder', '${id}')` )
 a.setAttribute("onmouseout", "parent.ICEcoder.overFileFolder('folder', '')" )
 a.setAttribute("onclick", `${clickEventHandler}` )
-a.setAttribute("style", `position:relative; color:#eee; font-size:12px; cursor:pointer; display=${visible}` )
+a.setAttribute("style", `position:relative; color:#eee; font-size:12px; cursor:pointer;` )
 //a.setAttribute("class", `${itemClass}`)
 a.textContent=name
 li.appendChild(a)
@@ -48,10 +50,10 @@ Object.keys(jsonResponse).forEach(function(key){
         //folder = document.createElement('ul')
         folder = createICNode(
             key,
-            "FOLDER: " + node['name'],
+            node['name'],
             true
         )
-        root =  document.createElement('ul')
+        if(typeof parent === 'undefined') root =  document.createElement('ul')
         root.appendChild(folder)
         depth++;
         parseFilesResponse(node.child[0]['files'], root)
@@ -78,7 +80,16 @@ function loadCSS(){
         link.type = 'text/css';
         link.href = FILES_CSS + styles[cssFile];
         link.media = 'all';
-        body.appendChild(link);
+        body.appendChild(link); 
         console.log("Appended", FILES_CSS+styles[cssFile])
     }
+}
+
+function toggleFolderElements(e){
+    node = e.target.parentNode.parentNode
+    Object.values(node.childNodes).forEach(function(node){
+        if(node.className != "pft-directory dirOpen"){
+            node.style.display = node.style.display === 'none' ? "block" : "none"
+        }
+    })
 }
