@@ -4146,7 +4146,7 @@ var ICEcoder = {
         this.openFiles.push(shortURL);
 
         // Setup a new tab
-        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
+        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="https://img.icons8.com/color/48/000000/close-window.png" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
         newTabDiv = document.createElement('div');
         newTabDiv.class = "tab"
         newTabDiv.id = 'tab' + (this.openFiles.length); //Inherited from IceCoder :D
@@ -4163,9 +4163,10 @@ var ICEcoder = {
         //onmouseout="this.style.color = thisColor">'
         newTabDiv.style.display = "inline-block";
         newTabDiv.style.position = "inherit";
+        newTabDiv.style.width = "135px";
         fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
-        newTabDiv.innerHTML = closeTabLink + `<span style='display: inline-block; position:inherit;width: 32px'></span>${fileName}`;
+        newTabDiv.innerHTML = closeTabLink + `<div><span style='display: inline-block; position:inherit;width: 32px'></span>${fileName}</div>`;
         newTabDiv.title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
         newTabDiv.className = "tab ext-" + fileExt;
 

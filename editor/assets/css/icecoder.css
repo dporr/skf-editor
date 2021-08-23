@@ -97,7 +97,12 @@ div{
     transition: left 0s ease-in-out;
 }
 .tabsBar .tab .closeTab, .tabsBar .closeAllTabs {margin: 2px 0 0 5px; border-radius: 6px; cursor: pointer}
-.tabsBar .tab .closeTab {position: absolute; right: 7px}
+.tabsBar .tab .closeTab {
+	position: absolute;
+	right: 1px;
+	width: 16px;
+	top: 4;
+}
 .tabsBar .alphaTabs {position: absolute; margin: 8px 0 0 -20px; border-radius: 6px; cursor: pointer}
 .tabsBar .alphaTabs:hover {background: #ccc}
 .tabsBar .closeAllTabs {position: absolute; margin: 8px 0 0 -36px}
