@@ -94,7 +94,7 @@ sendCmd = function(command, initial) {
 	};
 
 	// Send the XHR request
-	xhr.open("POST", "http://0.0.0.0:1337/api/terminal/command", true);
+	xhr.open("POST", parent.ICEcoder.API + "/api/terminal/command", true);
 	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.send(JSON.stringify({ "command": command }));
 }

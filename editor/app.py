@@ -56,7 +56,9 @@ log = logging.getLogger(__name__)
 
 @app.route("/")
 def start():
-    return render_template("index.html")
+    TARGET_LAB = f"http://{settings.SKF_LAB_DOMAIN}:{settings.SKF_LAB_PORT}"
+    EDITOR_API = f"http://{settings.SKF_EDITOR_DOMAIN}:{settings.SKF_EDITOR_PORT}"
+    return render_template("index.html", TARGET_LAB=TARGET_LAB, EDITOR_API=EDITOR_API)
 
 
 @app.route("/editor")

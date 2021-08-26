@@ -1,6 +1,6 @@
 let depth = 0;
-async function indexFiles(){
-const FILES_API = "http://0.0.0.0:1337/api/indexer/files";
+async function indexFiles(API){
+const FILES_API = API + "/api/indexer/files";
 const HEADERS = {};
 const response = await fetch(FILES_API, HEADERS)
 console.log("fetched")
