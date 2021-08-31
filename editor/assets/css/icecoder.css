@@ -12,9 +12,9 @@ h2 {font-size: 18px; font-weight: normal; color: #fff}
 .wrapp {
     height: 100%;
 }
-div{
+/* div{
     border: 1px solid red;
-}
+} */
 .realtime-status{
     border: 1px solid greenyellow;
 }

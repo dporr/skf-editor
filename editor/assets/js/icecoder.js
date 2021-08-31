@@ -231,7 +231,7 @@ var ICEcoder = {
         //this.toolShowHideToggle("terminal");
         // If we need to set the editor sizes
         if (false !== setEditor) {
-            console.log("getting called")
+
             this.editor.style.width = this.content.style.width = "100%"
             //this.editor.style.left = "10%";
 

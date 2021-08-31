@@ -3,7 +3,6 @@ async function indexFiles(API){
 const FILES_API = API + "/api/indexer/files";
 const HEADERS = {};
 const response = await fetch(FILES_API, HEADERS)
-console.log("fetched")
 const files = await response.json();
 if(response.ok){
     parseFilesResponse(files['files'])
@@ -81,7 +80,6 @@ function loadCSS(){
         link.href = FILES_CSS + styles[cssFile];
         link.media = 'all';
         body.appendChild(link); 
-        console.log("Appended", FILES_CSS+styles[cssFile])
     }
 }
 
