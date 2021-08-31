@@ -1,4 +1,5 @@
-var backSteps = 0;
+history_stack = [];
+history_pointer = -1;
 //Allow child iframe to report its URL
 window.addEventListener("message", function(event) {
     if (!window.location.origin) {
@@ -14,16 +15,17 @@ function updateAddressBar(value) {
     urlbar.value = unescape(value);
   }
 
-function openUrl(){
-    var urlbar = document.getElementById('addressBarText'); 
-    var browserIframe = document.getElementById('browser-iframe');
-    if(browserIframe.src != urlbar.value){
-      backSteps++;
-      browserIframe.src = urlbar.value;
+  function openUrl(isKnownUrl){
+    var urlbar = document.getElementById('addressBarText');
+    if(!isKnownUrl){
+      history_stack.push(urlbar.value)
+      history_pointer++; 
     }
-    
+    var backButton = document.getElementById('go-back');
+    backButton.disabled = (history_pointer > 0)? false : true;
+    var browserIframe = document.getElementById('browser-iframe');   
     //TODO: Validate URL: protocol + FQDN + [:port] + query_string
-     //baking our own XSS lol
+    browserIframe.src = urlbar.value; //baking our own XSS lol
 }
 
 function iframe_forward(){
@@ -36,8 +38,7 @@ function iframe_forward(){
 }
 
 function iframe_back(){
-  var browserIframe = document.getElementById('browser-iframe');
-  if(backSteps <= 1) return;
-  backSteps--;
-  browserIframe.contentWindow.history.back();
+  history_pointer--;
+  updateAddressBar(history_stack[history_pointer])
+  openUrl(true);
 }
