@@ -21,7 +21,9 @@ function updateAddressBar(value) {
       history_stack.push(urlbar.value)
       history_pointer++; 
     }
+    var forwardButton = document.getElementById('go-forward');
     var backButton = document.getElementById('go-back');
+    forwardButton.disabled = (history_stack.length -1 != history_pointer ) ? false : true;
     backButton.disabled = (history_pointer > 0)? false : true;
     var browserIframe = document.getElementById('browser-iframe');   
     //TODO: Validate URL: protocol + FQDN + [:port] + query_string
@@ -29,12 +31,9 @@ function updateAddressBar(value) {
 }
 
 function iframe_forward(){
-  var browserIframe = document.getElementById('browser-iframe');
-  if(backSteps < (browserIframe.contentWindow.history.length - 1)){
-    backSteps++;
-    browserIframe.contentWindow.history.forward();
-  }
-
+  history_pointer++;
+  updateAddressBar(history_stack[history_pointer])
+  openUrl(true);
 }
 
 function iframe_back(){
