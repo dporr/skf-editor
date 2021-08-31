@@ -70,7 +70,7 @@ t = {
 <link rel="stylesheet" href="assets/css/farbtastic.css" type="text/css">
 </head>
 
-<body onload="ICEcoder.versionNo = '8.0';ICEcoder.previousFiles = [];ICEcoder.theme = 'icecoder';ICEcoder.autoLogoutMins = 0;ICEcoder.fontSize = '13px';ICEcoder.openLastFiles = true;ICEcoder.updateDiffOnSave = true;ICEcoder.languageUser = 'english.php';ICEcoder.codeAssist = true;ICEcoder.lockedNav = true;ICEcoder.lineWrapping = false;ICEcoder.lineNumbers = true;ICEcoder.showTrailingSpace = true;ICEcoder.matchBrackets = true;ICEcoder.autoCloseTags = true;ICEcoder.autoCloseBrackets = true;ICEcoder.indentType = 'spaces';ICEcoder.indentAuto = true;ICEcoder.indentSize = 4;ICEcoder.scrollbarStyle = 'overlay';ICEcoder.demoMode = false;ICEcoder.tagWrapperCommand = 'ctrl+alt';ICEcoder.autoComplete = 'keypress';ICEcoder.bugFilePaths = [''];ICEcoder.bugFileCheckTimer = 0;ICEcoder.bugFileMaxLines = 0;ICEcoder.fileDirResOutput = 'none';ICEcoder.newDirPerms = 755;ICEcoder.newFilePerms = 644;ICEcoder.csrf = '21b42b714addaee46457886b1bfdddfe';ICEcoder.init();ICEcoder.content.style.visibility = 'visible';" onresize="ICEcoder.setLayout()" onkeydown="return ICEcoder.interceptKeys('coder', event);"  onblur="ICEcoder.resetKeys(event);" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="8.876.0" style="cursor: auto;">
+<body onload="ICEcoder.API='{{EDITOR_API}}';ICEcoder.versionNo = '8.0';ICEcoder.previousFiles = [];ICEcoder.theme = 'icecoder';ICEcoder.autoLogoutMins = 0;ICEcoder.fontSize = '13px';ICEcoder.openLastFiles = true;ICEcoder.updateDiffOnSave = true;ICEcoder.languageUser = 'english.php';ICEcoder.codeAssist = true;ICEcoder.lockedNav = true;ICEcoder.lineWrapping = false;ICEcoder.lineNumbers = true;ICEcoder.showTrailingSpace = true;ICEcoder.matchBrackets = true;ICEcoder.autoCloseTags = true;ICEcoder.autoCloseBrackets = true;ICEcoder.indentType = 'spaces';ICEcoder.indentAuto = true;ICEcoder.indentSize = 4;ICEcoder.scrollbarStyle = 'overlay';ICEcoder.demoMode = false;ICEcoder.tagWrapperCommand = 'ctrl+alt';ICEcoder.autoComplete = 'keypress';ICEcoder.bugFilePaths = [''];ICEcoder.bugFileCheckTimer = 0;ICEcoder.bugFileMaxLines = 0;ICEcoder.fileDirResOutput = 'none';ICEcoder.newDirPerms = 755;ICEcoder.newFilePerms = 644;ICEcoder.csrf = '21b42b714addaee46457886b1bfdddfe';ICEcoder.init();ICEcoder.content.style.visibility = 'visible';" onresize="ICEcoder.setLayout()" onkeydown="return ICEcoder.interceptKeys('coder', event);"  onblur="ICEcoder.resetKeys(event);" data-new-gr-c-s-check-loaded="8.876.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="8.876.0" style="cursor: auto;">
 
 <div id="loadingMask" class="blackMask" style="visibility: hidden;" oncontextmenu="return false">
 	<div class="popupVCenter">
@@ -139,8 +139,8 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
 		<a href="javascript:ICEcoder.propertiesScreen(ICEcoder.selectedFiles[ICEcoder.selectedFiles.length - 1])" onmouseover="ICEcoder.showFileMenu()">Properties</a>
 	</div>
 	
-	<div id="files" class="files" onmouseover="ICEcoder.changeFilesW('expand')" onmouseout="ICEcoder.changeFilesW('contract'); ICEcoder.hideFileMenu();" oncontextmenu="return false" style="width: 250px; background: rgb(56, 56, 56) none repeat scroll 0% 0%;">
-		<spa class="title">File explorer</spa>
+	<div id="files" class="files" onmouseover="ICEcoder.changeFilesW('expand')" onmouseout="ICEcoder.changeFilesW('contract'); ICEcoder.hideFileMenu();" oncontextmenu="return false" style="width: 250px; background: #1d1d1b">
+		<span class="title" style="size: 35px; color:red">File explorer</span>
 		<!-- <div id="fileNav" class="fileNav">
 			<ul>
 				<li><a nohref="" onclick="ICEcoder.canShowFMNav = true; ICEcoder.showHideFileNav('show', 'optionsFile')" onmouseover="if (ICEcoder.canShowFMNav) {ICEcoder.showHideFileNav('show', 'optionsFile')}" id="optionsFileNav">File</a></li>
@@ -334,7 +334,7 @@ Color picker"><img src="color-picker.png" style="cursor: pointer" alt="Color Pic
                 </div>
 		</div>
 		<div class="preview" id="browser" style="display: block;">
-			<iframe id="browser-iframe" src="http://localhost:8080" style="border:none;display:block;width: 100%; height: 100%;"></iframe>
+			<iframe id="browser-iframe" src={{TARGET_LAB}} style="border:none;display:block;width: 100%; height: 100%;"></iframe>
 		</div>
 		<div id="tool-icons" style="position: absolute; height: 30px; bottom: 0vh; width: inherit;">
 				<div onclick="ICEcoder.toolShowHideToggle('terminal')" id="toolLinkTerminal" title="Terminal" style="display: inline-block;">

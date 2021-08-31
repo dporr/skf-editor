@@ -12,7 +12,7 @@ var ICEcoder = {
 
     // URL we're viewing ICEcoder from
     iceLoc:                window.location.origin + window.location.pathname.replace(/\/$/, ""),
-
+    API : "",
     // Define settings
     selectedTabHash:        "",
     filesW:	               250,           // Width of files pane
@@ -4997,7 +4997,7 @@ var ICEcoder = {
             if (!parent.ICEcoder.content.contentWindow.createNewCMInstance) {
                 window.location.reload(true);
             } else {
-                const FILES_API = "http://0.0.0.0:1337/api/indexer/files/";
+                const FILES_API = parent.ICEcoder.API + "/api/indexer/files/";
                 const response = await fetch(FILES_API + id)
                 const content = await response.json();
                 if(!response.ok){
@@ -5033,7 +5033,7 @@ var ICEcoder = {
         }, 4);
     },
     putFile: async function(id, content){
-        const FILES_API = "http://0.0.0.0:1337/api/indexer/files";
+        const FILES_API = parent.ICEcoder.API  + "/api/indexer/files";
         const HEADERS ={ 'Content-Type': 'application/json' }
         const response = await fetch(FILES_API, {method:"PUT",headers:HEADERS,body:JSON.stringify({"hash":id, "content": content})})
         const files = await response.json();
