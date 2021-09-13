@@ -4209,17 +4209,6 @@ var ICEcoder = {
 
         // Push new file into array
         this.openFiles[tabNum - 1] = newName;
-        /**
-        newTabDiv.style.display = "inline-block";
-        newTabDiv.style.position = "inherit";
-        newTabDiv.style.width = "135px";
-        fileName = this.openFiles[this.openFiles.length - 1];
-        fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
-        newTabDiv.innerHTML = closeTabLink + 
-        newTabDiv.title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
-        newTabDiv.className = "tab ext-" + fileExt;
-
-         */
         // Setup a new tab
         closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="https://img.icons8.com/color/48/000000/close-window.png" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';        fileName = this.openFiles[tabNum - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
