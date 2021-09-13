@@ -4209,12 +4209,21 @@ var ICEcoder = {
 
         // Push new file into array
         this.openFiles[tabNum - 1] = newName;
-
-        // Setup a new tab
-        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="' + /*this.iceLoc + */ '/assets/img/nav-close.gif" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';
-        fileName = this.openFiles[tabNum - 1];
+        /**
+        newTabDiv.style.display = "inline-block";
+        newTabDiv.style.position = "inherit";
+        newTabDiv.style.width = "135px";
+        fileName = this.openFiles[this.openFiles.length - 1];
         fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
-        get('tab' + tabNum).innerHTML = closeTabLink + "<span style=\"display: inline-block; width: 19px\"></span>" + fileName.slice(fileName.lastIndexOf("/")).replace(/\//, "");
+        newTabDiv.innerHTML = closeTabLink + 
+        newTabDiv.title = "/" + this.openFiles[this.openFiles.length - 1].replace(/\//, "");
+        newTabDiv.className = "tab ext-" + fileExt;
+
+         */
+        // Setup a new tab
+        closeTabLink = '<a nohref onClick="ICEcoder.closeTab(parseInt(this.parentNode.id.slice(3), 10))"><img src="https://img.icons8.com/color/48/000000/close-window.png" class="closeTab" onMouseOver="prevBG = this.style.backgroundColor; this.style.backgroundColor = \'#333\'; parent.ICEcoder.overCloseLink = true" onMouseOut="this.style.backgroundColor = prevBG; parent.ICEcoder.overCloseLink = false"></a>';        fileName = this.openFiles[tabNum - 1];
+        fileExt = fileName.substr(fileName.lastIndexOf(".") + 1);
+        get('tab' + tabNum).innerHTML = closeTabLink +`<div><span style='display: inline-block; position:inherit;width: 32px'></span>${fileName}</div>`;
         get('tab' + tabNum).title = "/" + this.openFiles[tabNum - 1].replace(/\//, "");
         get('tab' + tabNum).className = "tab ext-" + fileExt;
     },
